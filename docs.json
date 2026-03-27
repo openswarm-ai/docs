@@ -9,6 +9,20 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Main Site",
+          "icon": "globe",
+          "href": "https://openswarm.info/"
+        },
+        {
+          "anchor": "Twitter",
+          "icon": "newspaper",
+          "href": "https://x.com/OpenSwarm_"
+        }
+      ]
+    },
     "tabs": [
       {
         "tab": "Guides",
@@ -67,21 +81,7 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
     "light": "/logo/light.svg",
