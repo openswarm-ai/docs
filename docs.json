@@ -21,6 +21,18 @@
           "icon": "x-twitter",
           "iconType": "brands",
           "href": "https://x.com/OpenSwarm_"
+        },
+        {
+          "anchor": "Discord",
+          "icon": "discord",
+          "iconType": "brands",
+          "href": "https://discord.gg/NRzxNZW5hH"
+        },
+        {
+          "anchor": "GitHub",
+          "icon": "github",
+          "iconType": "brands",
+          "href": "https://github.com/openswarm-ai/openswarm"
         }
       ]
     },
