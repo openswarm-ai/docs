@@ -18,7 +18,8 @@
         },
         {
           "anchor": "Twitter",
-          "icon": "newspaper",
+          "icon": "x-twitter",
+          "iconType": "brands",
           "href": "https://x.com/OpenSwarm_"
         }
       ]
