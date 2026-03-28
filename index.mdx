@@ -5,9 +5,11 @@ description: "The ideas, thought process, and vision behind Open Swarm"
 
 <video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
 
-> _"The future of AI is not artificial general intelligence — it's artificial general orchestration." _
+> "The future of AI is not artificial general intelligence — it's artificial general orchestration."
 >
 > **— The Swarm Thesis**
+
+---
 
 ## The Problem With Single-Agent AI
 
@@ -23,57 +25,135 @@ But AI assistants today are turn-taking machines. One agent. One task. One bottl
 
 The smartest model in the world, running through a chat window, is still running at the speed of your conversation.
 
-## Markets as Knowledge Coordinators
+---
 
-Friedrich Hayek made a claim: markets are the best way to coordinate dispersed knowledge. He argued that commodity prices transmit local insights about scarcity, demand or opportunity - which no central planner could ever gather in time.
+## The Insight: Human Teams, Not Human Brains
 
-In essence, global financial markets aggregate billions of individual forecasts about the future (corporate profits, interest rates, defaults, commodity supplies), thus functioning as large-scale, versatile prediction markets on topics ranging from weather and politics to corporate news.
+We didn't look at super-intelligence for inspiration. We looked at how high-performing human teams actually operate.
 
-For example, a rise in the price of copper instantly tells producers that it’s time to expand supply and consumers that it’s time to economize - even if neither group knows exactly why demand or supply shifted. Prices compress countless local signals into a single, actionable number that directs the actions of millions of producers and consumers across the globe.
+A product launch doesn't have one person doing everything sequentially. It has a strategist sketching the roadmap while an engineer prototypes, a designer builds assets, and a writer drafts the launch post — all in parallel, all aware of each other, all reporting to a human who's steering the whole thing.
 
-## The Limits of Hayek’s Era
-
-As revolutionary as his theory was, Hayek’s vision ran into the technological limits of his day. Markets could only capture certain kinds of knowledge - those tied directly to tangible goods like wheat, oil or steel.
-
-This brought about the question - what about the knowledge of future events? The political analyst who saw election patterns, the engineer who knew which technology would succeed, the doctor who understood which treatment worked - this knowledge remained locked away. You couldn’t trade it, you couldn’t verify it and you couldn’t aggregate it into a usable signal.
-
-## Blockchain Removes the Walls
-
-Traditional prediction markets tried, but they hit walls; limited access, geographical restrictions, trusted intermediaries, slow settlements, and the constant need for a centralized authority to decide what was “true”.
-
-Blockchain removes those walls. By making prediction markets open, automated, trustless and global. Blockchain finally allows outcomes to be priced in the same way as commodities are, thus turning dispersed knowledge into actionable signals.
-
-## Space Brings This Vision to Life
-
-By combining a central limit order book with multi-outcome markets, dynamic liquidity incentives, and continuous trading, Space creates the infrastructure for Hayek’s knowledge problem to be solved at scale. Not just for copper or wheat - but for elections, technological breakthroughs, market movements and any question where dispersed human knowledge needs to be coordinated.
-
-This is prediction markets living up to their promise: an open platform for turning scattered insights into calibrated forecasts that help individuals, institutions and societies make better decisions, while rewarding those who are right.
-
-<Card title="Start here" icon="rocket" horizontal href="/quickstart">
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Customize Open Swarm to your specific day to day workflow.
-
-<Columns cols={2}>
-  <Card title="Make Re-Usable Skills" icon="pen-to-square" href="/development">
-    Edit your docs locally and preview them in real time.
+<Columns cols={3}>
+  <Card title="Parallelism" icon="bolt">
+    Multiple agents work simultaneously, each in its own isolated environment — no blocking, no waiting.
   </Card>
 
-  <Card title="Plug in your tools & integrations" icon="palette" href="/essentials/settings">
-    Customize the design and colors of your site to match your brand.
+  <Card title="Specialization" icon="crosshairs">
+    Each agent is scoped to a specific task, tool set, and mode — so it stays focused and doesn't drift.
   </Card>
 
-  <Card title="Set custom agent modes" icon="map" href="/essentials/navigation">
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-
-  <Card title="Build your own apps " icon="terminal" href="/api-reference/introduction">
-    Paying for apps is so 2025. We don't like this. Hence, we made it easy for you to prompt an app into reality in seconds.
+  <Card title="Human Authority" icon="crown">
+    A human remains the final decision-maker. Agents propose. You approve. Control is never surrendered.
   </Card>
 </Columns>
+
+This is the model OpenSwarm is built on. Not one super-agent. A **coordinated swarm** — with you at the center.
+
+---
+
+## The Canvas: A Spatial Workspace for AI
+
+Most AI tools give you a chat window. You type, it responds, you scroll up to remember what happened.
+
+OpenSwarm gives you a **canvas**.
+
+Agents live as cards on an infinite spatial surface. You can see them all at once — what they're working on, what they've produced, what's waiting for your input. You can zoom out to see the whole operation, or zoom in on a single agent's output. You can branch a conversation, spawn a new agent from a result, or drag an output from one agent into another's context.
+
+This isn't cosmetic. Spatial organization changes how you think. When your work has shape — when it occupies space — you reason about it differently. You see gaps. You spot redundancies. You notice when two agents are converging on the same answer from different angles.
+
+The canvas is where orchestration becomes visible.
+
+---
+
+## Human-in-the-Loop Is Not a Fallback
+
+In most AI frameworks, "human-in-the-loop" means something went wrong. A confidence threshold wasn't met. A guardrail fired. The human is called in to clean up.
+
+We think that's backwards.
+
+In OpenSwarm, **human authority is a first-class design primitive** — not a safety net. Agents are built to pause, surface decisions, and wait for direction at meaningful inflection points. Not because they're uncertain, but because some decisions belong to you.
+
+You're not babysitting agents. You're directing them.
+
+This creates a fundamentally different kind of workflow: one where AI amplifies your judgment instead of replacing it. Where you stay in the loop not because the system failed, but because the system was designed to keep you there.
+
+---
+
+## Isolation by Default
+
+When OpenSwarm runs an agent, it doesn't just spin up a thread. It creates a **dedicated Git worktree** — an isolated copy of your codebase, scoped entirely to that agent's task.
+
+This means:
+
+- Agents working in parallel never step on each other's files
+- Every agent's changes are traceable, reviewable, and reversible
+- You can run ten agents simultaneously without any of them corrupting shared state
+
+When the work is done, changes surface as clean diffs — ready for your review, ready to merge, or ready to discard. Nothing sneaks into your codebase. Nothing happens behind the scenes.
+
+Isolation isn't a constraint. It's what makes true parallelism safe.
+
+---
+
+## The Knowledge Flywheel
+
+As you work with OpenSwarm, you're not just completing tasks — you're building a library of reusable intelligence.
+
+<Columns cols={3}>
+  <Card title="Templates" icon="copy">
+    Capture proven agent configurations and deploy them instantly. Stop rebuilding from scratch.
+  </Card>
+
+  <Card title="Skills" icon="wand-magic-sparkles">
+    Package complex, multi-step behaviors into single callable primitives your agents can invoke on demand.
+  </Card>
+
+  <Card title="Views" icon="window">
+    Build and embed custom UI directly inside the canvas — sandboxed, interactive, and agent-aware.
+  </Card>
+</Columns>
+
+Every workflow you define makes the next one faster. Every template you save reduces the cost of the next deployment. The swarm gets smarter not because the models improve — but because **your orchestration layer accumulates institutional knowledge**.
+
+This is the flywheel. And it compounds.
+
+---
+
+## The Swarm Thesis
+
+We believe the next era of AI isn't about building a single model that knows everything.
+
+It's about building systems where many models — each excellent at something specific — work together under coherent human direction.
+
+> "The future of AI is not artificial general intelligence. It's artificial general orchestration."
+
+The question was never _can AI be smarter than a human?_ The question is _can AI coordinate as well as a team of humans?_ That's the problem worth solving. That's the one that unlocks real leverage.
+
+OpenSwarm is our answer.
+
+---
+
+## Start Building
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Spin up your first agent in minutes and see the canvas in action.
+  </Card>
+
+  <Card title="Core Concepts" icon="book-open" href="/concepts">
+    Understand how agents, modes, and primitives fit together.
+  </Card>
+
+  <Card title="Templates" icon="copy" href="/templates">
+    Browse pre-built agent configurations ready to deploy.
+  </Card>
+
+  <Card title="MCP Integrations" icon="plug" href="/integrations">
+    Connect Gmail, Calendar, Drive, and your own tools.
+  </Card>
+</CardGroup>
+
+---
 
 ## Need inspiration?
 
