@@ -1,5 +1,6 @@
+
 ---
-title: "Navigation"
+title: "Navigatin"  
 description: "Zoom, pan, and navigate the infinite dashboard canvas."
 ---
 
@@ -7,43 +8,36 @@ The dashboard canvas is infinite and freely navigable. You can zoom in, zoom out
 
 ---
 
-## Panning
+## Trackpad
 
-### Two-finger scroll (trackpad)
+| Gesture | Action |
+|---|---|
+| **Two-finger swipe** | Pan in any direction |
+| **Pinch** | Zoom in/out, centered on cursor |
 
-Swipe with two fingers in any direction to pan the canvas. This is the most natural way to move around on a Mac trackpad.
-
-### Middle-click drag
-
-Hold down the **middle mouse button** and drag to pan.
-
-### Right-click drag
-
-Hold down the **right mouse button** and drag to pan.
-
-### Space + drag
-
-Hold **Space** and drag with the left mouse button to pan. The cursor changes to a grab cursor when Space is held.
-
-### ⌘/Ctrl + drag
-
-Hold **⌘** (Mac) or **Ctrl** (Windows/Linux) and drag with the left mouse button to pan.
+Pinch-to-zoom sensitivity can be adjusted in **Settings → Zoom Sensitivity** (range 1–100, default 50).
 
 ---
 
-## Zooming
+## Mouse
 
-### Pinch-to-zoom (trackpad)
+| Action | Result |
+|---|---|
+| **Middle-click drag** | Pan |
+| **Right-click drag** | Pan |
+| **⌘/Ctrl + left-click drag** | Pan |
+| **Space + left-click drag** | Pan (cursor changes to grab) |
+| **Scroll wheel** | Scroll vertically (does not pan or zoom — use keyboard shortcuts to zoom) |
 
-Pinch with two fingers on a trackpad to zoom centered on your cursor position. This maps to the standard "pinch" gesture (`ctrlKey` events from the browser).
+---
 
-### Keyboard shortcuts
+## Keyboard
 
 | Shortcut | Action |
 |---|---|
 | **⌘ +** | Zoom in (centered on viewport) |
 | **⌘ −** | Zoom out (centered on viewport) |
-| **⌘ 0** | Reset zoom to 100% and reset pan to origin |
+| **⌘ 0** | Reset zoom to 100% and pan to origin |
 
 Zoom range: **15%** to **300%**.
 
@@ -61,24 +55,20 @@ A small control bar appears in the bottom-right corner of the canvas:
 | **⊡ Fit to view** | Fit all cards into the viewport with padding |
 | **✦ Tidy layout** | Auto-arrange all cards into a clean grid |
 
-### Fit to view
+**Fit to view** — Automatically zooms and pans so all cards are visible. Also runs on first load.
 
-Automatically zooms and pans so that all cards on the canvas are visible, with comfortable padding around them. This also runs automatically on first load.
-
-### Tidy layout
-
-Rearranges all cards into a structured layout. Useful when the canvas has gotten messy after a lot of agent activity.
-
----
-
-## Zoom sensitivity
-
-Pinch-to-zoom sensitivity can be adjusted in **Settings → Zoom Sensitivity** (range 1–100, default 50). This scales how aggressively trackpad pinch gestures zoom the canvas.
+**Tidy layout** — Rearranges all cards into a structured grid. Useful after heavy agent activity.
 
 ---
 
 ## Focus on a card
 
-Clicking a card in the [Dashboard Header](/dashboard/header) dropdown automatically pans and zooms the canvas to center on that card (animated, at 1:1 zoom).
+Clicking a card in the [Dashboard Header](/dashboard/header) dropdown pans and zooms the canvas to center on that card (animated, at 1:1 zoom). The card briefly highlights with a glow effect to confirm focus.
 
-The card briefly highlights with a glow effect to confirm which one was focused.
+---
+
+**Key changes:**
+- Reorganized by **input device** (Trackpad / Mouse / Keyboard) instead of by action (Panning / Zooming), which avoids mixing the two modalities mid-section
+- Added a note clarifying that scroll wheel does **not** zoom — a common point of confusion for mouse users who expect scroll-to-zoom behavior they get on trackpad
+- Moved zoom sensitivity setting next to the trackpad section where it actually applies
+- Kept keyboard shortcuts as their own section since they're device-agnostic

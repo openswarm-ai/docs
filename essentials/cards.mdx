@@ -3,9 +3,28 @@ title: "Cards"
 description: "The three card types that live on the dashboard canvas."
 ---
 
-<video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
+<video
+  src="/videos/MultiAgentDemo.mp4"
+  autoPlay
+  muted
+  loop
+  playsInline
+  style={{ borderRadius: "12px", width: "100%", marginBottom: "32px" }}
+/>
 
 Every item on the dashboard canvas is a **card**. Cards can be freely moved, resized, and layered. There are three card types:
+
+<CardGroup cols={3}>
+  <Card title="Agent Cards" icon="robot" href="#agent-cards">
+    Live chat sessions with an AI agent
+  </Card>
+  <Card title="App Cards" icon="window" href="#app-cards">
+    Interactive apps built by agents, embedded on the canvas
+  </Card>
+  <Card title="Browser Cards" icon="browser" href="#browser-cards">
+    Full in-app web browsers, manually or agent-driven
+  </Card>
+</CardGroup>
 
 ---
 
@@ -15,123 +34,131 @@ Agent cards are live chat sessions with an AI agent. Each card corresponds to on
 
 ### States
 
-An agent card's header dot shows the current status:
+The header badge reflects the card's current status:
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
-  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-    <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#E9F1DC', color: '#265B19', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>running</span>
-    <span style={{ fontSize: '0.9rem' }}>Agent is actively executing</span>
+<div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "4px" }}>
+  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#E9F1DC", color: "#265B19", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>running</span>
+    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Agent is actively executing</span>
   </div>
-
-  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-    <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#F6EEDF', color: '#805C1F', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>waiting approval</span>
-    <span style={{ fontSize: '0.9rem' }}>Paused, awaiting your sign-off</span>
+  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#F6EEDF", color: "#805C1F", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>waiting approval</span>
+    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Paused — awaiting your sign-off on a tool call</span>
   </div>
-
-  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-    <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#F5F4ED', color: '#73726C', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>completed</span>
-    <span style={{ fontSize: '0.9rem' }}>Finished or manually stopped</span>
+  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#F5F4ED", color: "#73726C", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>completed</span>
+    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Finished or manually stopped</span>
   </div>
-
-  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-    <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#FEE2E2', color: '#B53333', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>error</span>
-    <span style={{ fontSize: '0.9rem' }}>Something went wrong</span>
+  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+    <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#FEE2E2", color: "#B53333", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>error</span>
+    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Something went wrong</span>
   </div>
 </div>
 
-### Collapsed vs. expanded
+### Collapsed vs. Expanded
 
-By default, agent cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to **expand/collapse** it.
+By default, agent cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to toggle.
 
-Expand an agent card to:
-
+When **expanded**, you can:
 - Read the full message history
 - Send follow-up messages
 - Edit, copy, and branch chats
 
-You can set the  **Default agent spawn state in dashboard** in Settings, this determines if a new agent card is expanded or collapsed.
+<Tip>
+  You can set the default spawn state (collapsed or expanded) under **Settings → Default agent spawn state**.
+</Tip>
 
-### Resizing
+### Approval Bar
 
-Drag any edge or corner handle to resize the card. Minimum size is enforced so the card always remains usable.
+When an agent is waiting for tool-call approval, an inline **Approval Bar** appears with **Approve / Deny** buttons — always visible regardless of whether the card is collapsed or expanded.
 
-### Dragging
+### Sub-agent Cards
 
-Grab anywhere in an agent card's header to move the card freely on the canvas.
+When an agent spawns sub-agents, child cards are automatically placed near the parent and visually linked so you can trace the hierarchy at a glance.
 
-### Sub-agent cards
+<Note>
+  To keep sub-agents hidden by default, toggle **Auto-reveal sub-agents** in Settings.
+</Note>
 
-When an agent spawns sub-agents, child cards are automatically placed near the parent card and visually linked so you can see what's going on. If you would rather have sub-agents remain hidden by default, you can set this via the **Auto-reveal sub-agents** setting.
+### Resizing & Dragging
 
-### Approval bar
-
-If an agent is waiting for tool-call approval, the card shows an inline **Approval Bar** with Approve / Deny buttons. This is always visible regardless of if an agent card is expanded or collapsed.
+- **Resize** — drag any edge or corner handle. A minimum size is enforced so the card stays usable.
+- **Move** — grab the card's header to drag it freely on the canvas.
 
 ---
 
 ## App Cards
 
-App cards embed a live **app** — an interactive, full-stack, applications built by agents — directly on the canvas.
+App cards embed a live **app** — interactive, full-stack applications built by agents — directly on the canvas.
 
-### Opening an app
+### Opening an App
 
-Open the toolbar → click **Add App** (⌘M) → search and select an output from the picker. The app is placed as a new card on the canvas.
+<Steps>
+  <Step title="Open the toolbar">
+    Click **Add App** in the toolbar, or press <kbd>⌘M</kbd>.
+  </Step>
+  <Step title="Pick an output">
+    Search for and select any output from the picker.
+  </Step>
+  <Step title="Done">
+    The app is placed as a new card on the canvas.
+  </Step>
+</Steps>
 
-### Interacting with an app
+### Interacting with an App
 
 You can interact with an app like any normal website — click buttons, fill forms, scroll, etc.
 
-The header shows:
-
+The card header shows:
 - The view's name and icon
 - A **Refresh** button to reload the iframe
 - A **Close** button
 
 ### Resizing
 
-Drag any edge or corner handle to resize. Minimum card size: 320 × 200 px.
+Drag any edge or corner handle to resize. Minimum card size: **320 × 200 px**.
 
 ---
 
 ## Browser Cards
 
-Browser cards are full in-app web browsers embedded on the canvas. They support manual browsing and can also be driven autonomously by an agent.
+Browser cards are full in-app web browsers embedded on the canvas — supporting both manual browsing and autonomous agent control.
 
-### Open a new browser
+### Opening a Browser
 
-Click **Browser** in the toolbar (⌘N). The card opens to your configured homepage.
+Click **Browser** in the toolbar, or press <kbd>⌘N</kbd>. The card opens to your configured homepage.
 
 ### Tabs
 
-Browser cards support multiple tabs:
-
-- Click **\+** in the tab bar to open a new tab.
-- Click any tab to switch to it.
-- Drag tabs to reorder them.
-- Click **✕** on a tab to close it.
+<Steps>
+  <Step title="New tab">Click **+** in the tab bar.</Step>
+  <Step title="Switch">Click any tab to bring it into focus.</Step>
+  <Step title="Reorder">Drag tabs left or right.</Step>
+  <Step title="Close">Click **✕** on a tab to close it.</Step>
+</Steps>
 
 ### Navigation
 
-The card has a standard browser address bar:
+The card includes a standard address bar:
+- Type a URL or search term and press **Enter**
+- Bare search terms are sent to Google automatically
+- **◀ Back**, **▶ Forward**, and **↺ Refresh** work as expected
 
-- Type a URL or search query and press Enter.
-- Bare search terms are sent to Google automatically.
-- Back (◀), Forward (▶), and Refresh (↺) buttons work as expected.
+### Agent Control
 
-### Browser agent overlay
+When an agent is actively controlling the browser, an **overlay** appears showing what the agent is doing in real time. It fades out once the agent finishes.
 
-When an agent is actively controlling the card, an **overlay** appears on top of the card showing what the agent is doing in real time. Once the agent finishes, the overlay fades out.
+To let an agent reference or control a browser:
+1. Enable **select mode** when composing a message
+2. Click the target browser card on the canvas
+3. Send — the agent now has full context of and control over that browser
 
 ### Resizing
 
 Drag any edge or corner handle to resize.
 
-### Referencing a browser within an agent
-
-When sending a message to an agent, enable "select mode" and select a browser on your canvas. When you send the message, this agent will now be able to both access the context of the browser and functionally control the browser.
-
 ---
 
-## Card layering
+## Card Layering
 
-Cards can overlap. Clicking or interacting with a card automatically brings it to the front.
+Cards can overlap freely. Clicking or interacting with any card automatically **brings it to the front**.
