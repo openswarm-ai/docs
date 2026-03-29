@@ -1,0 +1,83 @@
+---
+title: "Approvals"
+description: "Reviewing and approving tool calls before the agent executes them."
+---
+
+When an agent wants to use a tool that requires your permission, it pauses and shows an **approval request**. You review what the agent is about to do, then approve or deny it.
+
+---
+
+## How approvals work
+
+Tool call permissions are configured per-tool in the [Tools](/tools) section. When a tool is set to **"Ask"** (rather than auto-allow or deny), every call to that tool is paused for your review.
+
+The agent's status changes to **`waiting_approval`** (amber dot) while it waits. It will not proceed until you respond.
+
+---
+
+## The approval card
+
+Each pending tool call appears as an **approval card** in the agent chat. The card shows:
+
+- **Tool icon and name** — e.g., a terminal icon for Bash, a document icon for Read/Write
+- **Integration badge** — for MCP tools, a branded badge (e.g., Google Workspace, X/Twitter, Reddit) with the action name
+- **Tool preview** — a human-readable summary of what the tool will do:
+
+| Tool | Preview shows |
+|---|---|
+| **Bash** | The shell command (in a code block), plus the description if provided |
+| **Read** | The file path |
+| **Write / Edit** | The file path and a preview of the content being written |
+| **Grep / Glob** | The search pattern and directory |
+| **MCP tools** | A smart summary (e.g., email recipient + subject, calendar event name, search query) |
+
+---
+
+## Approving a tool call
+
+Click **Approve** (checkmark) to let the agent proceed with the tool call as-is.
+
+### Editing inputs before approving
+
+For some tool calls, you can **modify the inputs** before approving. An **Edit inputs** toggle expands an input editor showing the raw tool input as JSON. Make your changes, then click Approve — the agent executes with your modified inputs.
+
+---
+
+## Denying a tool call
+
+Click **Deny** (X) to block the tool call. An optional **message field** appears — you can type a reason or instruction for the agent (e.g., "use a different path" or "don't do this"). The agent receives the denial and your message and decides how to proceed.
+
+---
+
+## Multiple pending approvals
+
+If an agent makes several tool calls in the same turn, each one gets its own card. They are shown in sequence. You approve or deny each independently.
+
+---
+
+## Batch approvals
+
+You can approve or deny all pending tool calls across **all agents on the dashboard** at once using keyboard shortcuts:
+
+| Shortcut | Action |
+|---|---|
+| **Shift+A** | Approve all pending tool calls |
+| **Shift+D** | Deny all pending tool calls |
+
+The **BatchApprovalBar** appears at the top of the dashboard when any agent is waiting, showing a count of pending approvals and the same bulk Approve / Deny buttons.
+
+---
+
+## Auto-approval
+
+Tools can be set to **Always allow** in the Tools settings, which skips the approval step entirely for that tool. Conversely, **Always deny** blocks a tool unconditionally without ever asking.
+
+The three modes per tool are:
+
+| Permission | Behavior |
+|---|---|
+| **Allow** | Executes automatically, no approval needed |
+| **Ask** | Pauses and waits for your approval |
+| **Deny** | Blocked immediately, agent is informed |
+
+

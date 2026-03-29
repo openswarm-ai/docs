@@ -46,6 +46,16 @@
             ]
           },
           {
+            "group": "Agents",
+            "pages": [
+              "approvals",
+              "branching",
+              "chat-input",
+              "element-selection",
+              "messages"
+            ]
+          },
+          {
             "group": "Workspaces",
             "pages": [
               "essentials/overview",

@@ -1,0 +1,137 @@
+---
+title: "Chat Input"
+description: "The prompt editor — slash commands, @ commands, attachments, modes, and models."
+---
+
+The **Chat Input** is the rich text editor at the bottom of every agent card (and in the dashboard toolbar when launching a new agent). It's the primary way you communicate with an agent.
+
+---
+
+## Sending a message
+
+Type your prompt and press **Enter** to send. Press **Shift+Enter** to insert a newline.
+
+When the agent is busy (running or waiting for approval), new messages are **queued** — they appear in a queue indicator above the input and are dispatched automatically once the agent finishes its current turn.
+
+---
+
+## Message queue
+
+If you send messages while an agent is still running, they are held in a queue. A badge above the input shows how many messages are waiting. You can:
+- **Edit** a queued message before it sends
+- **Reorder** queued messages by dragging them
+- **Delete** a queued message from the queue
+
+---
+
+## `/` — Slash commands
+
+Type `/` anywhere at the start of a word to open the **Command Picker**. This surfaces three categories:
+
+### Templates
+
+Pre-built prompt templates. Selecting one either inserts the template text directly (if it has no fields) or opens a **Template Invoke Modal** where you fill in the template's variables before sending.
+
+### Skills
+
+Skills are reusable prompt fragments. Selecting a skill inserts it as a **skill pill** inline in the editor — a compact, removable chip. The skill's content is injected into the prompt when sent. You can attach multiple skills to a single message.
+
+### Modes
+
+Switch the agent's mode without leaving the input. Selecting a mode from the picker changes the active mode for this session immediately.
+
+---
+
+## `@` — Context commands
+
+Type `@` at the start of a word to open the **Context Picker**. This lets you attach context or force specific tools for the current message.
+
+### `@file`
+
+Opens a **file/folder browser** to attach a local file or directory as context. The path is added as a context chip above the input. The agent receives the file contents when processing the message.
+
+### `@web`
+
+Forces the agent to use **WebSearch** and/or **WebFetch** for this message (if those tools are configured). Appears as a tool-group pill on the input.
+
+### MCP tool groups
+
+If you have MCP integrations configured (e.g. Google Workspace, X/Twitter, Reddit), they appear as `@` options. Selecting one forces the agent to use that integration's tools for the message. These appear as branded pills (with the service icon) above the input.
+
+---
+
+## Mode selector
+
+A pill button in the bottom-left of the input shows the **current mode**. Click it to open a dropdown and switch to a different mode. Modes are defined in the [Modes](/modes) section.
+
+The mode persists across messages in the session. If a mode has a `default_next_mode` configured, the session automatically switches to it after each agent turn completes.
+
+---
+
+## Model selector
+
+Next to the mode selector is the **model picker**. Available models:
+
+| Value | Label | Version |
+|---|---|---|
+| `sonnet` | Sonnet | Claude 4.6 |
+| `opus` | Opus | Claude 4.6 |
+| `haiku` | Haiku | Claude 3.5 |
+
+The model persists for the session. Switching models takes effect on the next message.
+
+---
+
+## Context window ring
+
+A small circular progress ring appears in the toolbar when the session has used tokens. Hovering shows the exact usage: `X% · N / 200K context used`. The context window for all models is **200,000 tokens**.
+
+---
+
+## Image attachments
+
+You can attach images to any message:
+
+- **Drag and drop** image files onto the input — a drop zone overlay appears
+- **Paste** an image from clipboard directly into the editor
+- **Click the attachment button** to open a file picker
+
+Attached images appear as thumbnails above the input. Click a thumbnail to view it full-size. Click the `×` on a thumbnail to remove it.
+
+---
+
+## File attachments
+
+Non-image files can be attached by:
+- **Drag and dropping** onto the input (files are uploaded to a temp location and attached as context paths)
+- **`@file`** picker (navigates the filesystem directly)
+
+File attachments appear as path chips above the input. Clicking a path chip copies the path to clipboard.
+
+---
+
+## Element selection context
+
+Selected UI elements (from [element selection mode](/agent/element-selection)) appear as context chips above the input. These are automatically appended to the prompt as structured metadata when the message is sent.
+
+If dashboard cards were copied (`⌘C`) and then pasted (`⌘V`) into the input, they are converted into selection context automatically.
+
+---
+
+## Stopping the agent
+
+While the agent is running, the **Send** button becomes a **Stop** button (square icon). Click it to stop the agent mid-run.
+
+---
+
+## Keyboard reference
+
+| Key | Action |
+|---|---|
+| **Enter** | Send message |
+| **Shift+Enter** | New line |
+| **/** | Open slash command picker |
+| **@** | Open context picker |
+| **↑ / ↓** | Navigate picker items |
+| **Tab / Enter** | Select picker item |
+| **Escape** | Close picker |

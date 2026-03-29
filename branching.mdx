@@ -1,0 +1,66 @@
+---
+title: "Branching"
+description: "How editing messages creates conversation branches, and how to navigate them."
+---
+
+Branching lets you explore alternative conversation paths without losing your original history. Every time you edit a user message or regenerate an assistant response, OpenSwarm creates a new **branch** from that point.
+
+---
+
+## How branches are created
+
+Branches are created automatically in two ways:
+
+### 1. Editing a user message
+
+When you click **Edit** on a user message and save a change (even identical content), the agent re-runs from that message forward on a **new branch**. The original message and all subsequent messages on the old branch are preserved.
+
+### 2. Regenerating an assistant response
+
+Clicking **Regenerate** on an assistant message re-sends the preceding user message. This also creates a new branch — the new response and all future messages go on the new branch.
+
+### 3. Branching the entire chat
+
+Clicking **Branch chat** on any assistant message creates a **new session** (a new agent card on the dashboard) that is a full copy of the conversation up to that point. This is a heavier operation — it spawns a separate agent — useful when you want to explore a completely different direction in parallel.
+
+---
+
+## Branch structure
+
+Internally, each session has a tree of branches. Every branch has:
+- A **parent branch** it forked from
+- A **fork point message** — the user message that was edited to create it
+
+The **active branch** is the one currently displayed. All new messages you send go onto the active branch.
+
+---
+
+## Navigating branches
+
+### Branch navigator on user messages
+
+When a user message has multiple branch variants (i.e., it was edited at least once), a **`◀ N / N ▶`** navigator appears in the message action bar on hover.
+
+- The numbers show `current branch / total branches` at that fork point.
+- Click **◀** to go to the previous variant.
+- Click **▶** to go to the next variant.
+
+Switching to a different branch at a fork point updates the entire conversation view — all messages after the fork point change to reflect that branch's history.
+
+### What you see
+
+The chat view always shows a **linearized view** of the active branch — it stitches together the correct segments from each ancestor branch back to the root, so you see a coherent conversation from top to bottom.
+
+---
+
+## Preserving history
+
+Nothing is ever deleted when you branch. All branches and their messages are stored. You can always navigate back to any earlier branch using the branch navigator.
+
+---
+
+## Practical uses
+
+- **Trying different phrasings** — edit your prompt to be more specific and see if the agent does better, then compare both responses
+- **Undoing a bad direction** — if the agent went off-track, edit an earlier message to steer it differently without losing the original thread
+- **A/B testing instructions** — send the same task with two slightly different prompts and compare results side by side (using **Branch chat** to get a second card on the canvas)
