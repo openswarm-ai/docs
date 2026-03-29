@@ -32,6 +32,7 @@ Every item on the dashboard canvas is a **card**. Cards can be freely moved, res
 
 Agent cards are live chat sessions with an AI agent. Each card corresponds to one conversation.
 
+
 ### States
 
 The header badge reflects the card's current status:
@@ -39,22 +40,21 @@ The header badge reflects the card's current status:
 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "4px" }}>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
     <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#E9F1DC", color: "#265B19", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>running</span>
-    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Agent is actively executing</span>
+    <span style={{ fontSize: "0.9rem" }}>Agent is actively executing</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
     <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#F6EEDF", color: "#805C1F", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>waiting approval</span>
-    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Paused — awaiting your sign-off on a tool call</span>
+    <span style={{ fontSize: "0.9rem" }}>Paused — awaiting your sign-off on a tool call</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
     <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#F5F4ED", color: "#73726C", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>completed</span>
-    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Finished or manually stopped</span>
+    <span style={{ fontSize: "0.9rem" }}>Finished or manually stopped</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
     <span style={{ display: "inline-flex", alignItems: "center", height: "22px", padding: "0 8px", borderRadius: "16px", backgroundColor: "#FEE2E2", color: "#B53333", fontWeight: 600, fontSize: "0.7rem", lineHeight: 1, flexShrink: 0 }}>error</span>
-    <span style={{ fontSize: "0.9rem", color: "#374151" }}>Something went wrong</span>
+    <span style={{ fontSize: "0.9rem" }}>Something went wrong</span>
   </div>
 </div>
-
 ### Collapsed vs. Expanded
 
 By default, agent cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to toggle.
@@ -116,7 +116,7 @@ The card header shows:
 
 ### Resizing
 
-Drag any edge or corner handle to resize. Minimum card size: **320 × 200 px**.
+Drag any edge or corner handle to resize.
 
 ---
 
