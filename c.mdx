@@ -10,13 +10,13 @@ Every action in OpenSwarm has a **permission policy** that determines how the ag
 There are three policies:
 
 | Policy | Icon | Behavior |
-|---|---|---|
+| --- | --- | --- |
 | **Always Allow** | Green checkmark | The agent executes the action without asking. Silent and autonomous. |
-| **Ask** | Yellow hand | The agent pauses and asks the user for approval before executing. An approval bar appears in the chat. |
+| **Ask** | Yellow hand | The agent pauses and asks the user for approval before executing. |
 | **Deny** | Red block | The agent cannot use this action at all. It won't appear in the agent's available tools. |
 
 <Info>
-The default policy for most built-in core actions is `always_allow`. For MCP integration actions, the default is `ask` — so newly discovered third-party tools always require approval until you explicitly allow them.
+  The default policy for most built-in core actions is `always_allow`. For MCP integration actions, the default is `ask` — so newly discovered third-party tools always require approval until you explicitly allow them.
 </Info>
 
 ## Permission Granularity
@@ -39,15 +39,16 @@ If actions within a category have mixed policies, the category toggle shows a **
 
 Every action has its own permission toggle. This is the most granular level — you can set `Read` to `always_allow` while keeping `Write` on `ask` and `Bash` on `deny`.
 
-### 4. MCP Integration Level
+### 4. Integration Level
 
-MCP integrations (Google Workspace, xbird, custom servers) have an additional layer of granularity. After [tool discovery](/customization/actions/mcp-registry#tool-discovery), each integration's actions are organized by:
+Integrations (Google Workspace, xbird, custom servers) have an additional layer of granularity. After [tool discovery](/customization/actions/mcp-registry#tool-discovery), each integration's actions are organized by:
 
 - **Read vs. Write** — actions are automatically categorized based on their name prefix (e.g., `get_`, `list_`, `search_` → read; `create_`, `delete_`, `send_` → write)
 - **Service** — actions are grouped by the service they belong to (e.g., Gmail, Calendar, Drive, Sheets for Google Workspace; Tweets, Timeline, Network for Twitter)
 - **Service Group** — services are further grouped by provider (e.g., all Google services under "Google")
 
 This lets you do things like:
+
 - Allow all read actions but require approval for writes
 - Enable Gmail but deny Calendar access
 - Allow searching tweets but block posting
@@ -74,7 +75,7 @@ When an agent encounters an `ask` action, it will:
 4. Continue only if approved
 
 <Tip>
-A good starting configuration: set Core Actions to `always_allow` for a smooth experience, keep Extended Actions on `always_allow`, and leave MCP integration write actions on `ask` until you trust the workflow.
+  A good starting configuration: set Core Actions to `always_allow` for a smooth experience, keep Extended Actions on `always_allow`, and leave MCP integration write actions on `ask` until you trust the workflow.
 </Tip>
 
 ## Permission Storage
