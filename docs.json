@@ -92,8 +92,8 @@
     ]
   },
   "logo": {
-    "light": "/images/LogoDark.png",
-    "dark": "/images/LogoLight.png"
+    "light": "/images/LogoDark2.png",
+    "dark": "/images/LogoLight2.png"
   },
   "navbar": {
     "links": [
