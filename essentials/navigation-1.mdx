@@ -10,35 +10,37 @@ The dashboard canvas is infinite and freely navigable. You can zoom in, zoom out
 ## Trackpad
 
 | Gesture | Action |
-|---|---|
+| --- | --- |
 | **Two-finger swipe** | Pan in any direction |
 | **Pinch** | Zoom in/out, centered on cursor |
 
-Pinch-to-zoom sensitivity can be adjusted in **Settings → Zoom Sensitivity** (range 1–100, default 50).
+<Note>
+  Pinch-to-zoom sensitivity can be adjusted in **Settings → Zoom Sensitivity** 
+</Note>
 
 ---
 
 ## Mouse
 
 | Action | Result |
-|---|---|
-| **Middle-click drag** | Pan |
+| --- | --- |
+| **Middle click & drag** | Pan |
 | **Right-click drag** | Pan |
-| **⌘/Ctrl + left-click drag** | Pan |
-| **Space + left-click drag** | Pan (cursor changes to grab) |
-| **Scroll wheel** | Scroll vertically (does not pan or zoom — use keyboard shortcuts to zoom) |
+| **⌘/Ctrl \+ left-click drag** | Pan |
+| **Space \+ left-click drag** | Pan |
+| **Scroll-wheel** | Scroll vertically |
+| **Shift \+ Scroll-wheel** | Scroll horizontally |
+| **⌘/Ctrl \+ Scroll wheel** | Zoom |
 
 ---
 
 ## Keyboard
 
 | Shortcut | Action |
-|---|---|
-| **⌘ +** | Zoom in (centered on viewport) |
+| --- | --- |
+| **⌘ \+** | Zoom in (centered on viewport) |
 | **⌘ −** | Zoom out (centered on viewport) |
 | **⌘ 0** | Reset zoom to 100% and pan to origin |
-
-Zoom range: **15%** to **300%**.
 
 ---
 
@@ -47,19 +49,12 @@ Zoom range: **15%** to **300%**.
 A small control bar appears in the bottom-right corner of the canvas:
 
 | Control | Description |
-|---|---|
-| **−** | Zoom out one step |
-| **N%** | Current zoom percentage. Click to reset to 100%. |
-| **+** | Zoom in one step |
+| --- | --- |
+| **−** | Zoom out |
+| **\+** | Zoom in |
 | **⊡ Fit to view** | Fit all cards into the viewport with padding |
 | **✦ Tidy layout** | Auto-arrange all cards into a clean grid |
 
 **Fit to view** — Automatically zooms and pans so all cards are visible. Also runs on first load.
 
 **Tidy layout** — Rearranges all cards into a structured grid. Useful after heavy agent activity.
-
----
-
-## Focus on a card
-
-Clicking a card in the [Dashboard Header](/dashboard/header) dropdown pans and zooms the canvas to center on that card (animated, at 1:1 zoom). The card briefly highlights with a glow effect to confirm focus.
