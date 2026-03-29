@@ -41,9 +41,8 @@
             "group": "Getting started",
             "pages": [
               "index",
-              "quickstart",
-              "development",
-              "what-is-open-swarm"
+              "what-is-open-swarm",
+              "quickstart"
             ]
           },
           {
