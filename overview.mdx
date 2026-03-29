@@ -1,15 +1,15 @@
 ---
 title: "What Are Skills?"
-description: "Skills are structured instructions that teach OpenSwarm agents how to handle specific tasks — learn what they are and why they matter."
+description: "Skills are structured instructions that teach agents how to handle specific tasks."
 ---
 
 ## The Big Idea
 
-An agent on its own is a capable general-purpose reasoner. It can handle a lot — but it doesn't know the specifics of *your* workflows, *your* output formats, *your* domain expertise.
+An agent on its own is a capable general-purpose reasoner. It can handle a lot — but it doesn't know the specifics of _your_ workflows, _your_ output formats, _your_ domain expertise.
 
 **Skills** fill that gap.
 
-A skill is a set of structured instructions that teach an agent how to approach a specific type of task. When a skill is active, the agent follows its guidance — producing better, more consistent results for that domain than it would on its own.
+A skill is a set of instructions that teach an agent how to approach a specific type of task. When a skill is active, the agent follows its guidance — producing better, more consistent results for that domain than it would on its own.
 
 Think of skills like playbooks: a support agent with a "ticket triage" skill knows exactly how to categorize, prioritize, and respond to issues following your team's process.
 
@@ -20,12 +20,13 @@ Think of skills like playbooks: a support agent with a "ticket triage" skill kno
 Say you often ask your agent to create Word documents. Without a skill, the agent will do its best — but it might use inconsistent formatting, forget page numbers, or structure things differently each time.
 
 Give it the **docx skill**, and now it knows to:
+
 - Use `python-docx` for document generation
 - Apply heading hierarchies properly
 - Add page numbers and tables of contents
 - Output with professional formatting every time
 
-The agent's core intelligence stays the same. The skill just tells it *how* to apply that intelligence to a specific task.
+The agent's core intelligence stays the same. The skill just tells it _how_ to apply that intelligence to a specific task.
 
 ---
 
@@ -33,7 +34,7 @@ The agent's core intelligence stays the same. The skill just tells it *how* to a
 
 A skill is a **Markdown file** (`SKILL.md`) with two parts:
 
-1. **Frontmatter** — A name and description that tells the agent *when* to use the skill
+1. **Header** — A name and description that tells the agent _when_ to use the skill
 2. **Body** — The actual instructions the agent follows
 
 ```markdown
@@ -50,8 +51,8 @@ When the user asks to work with PDFs, follow these steps...
 Skills use a **three-level loading system** to stay efficient:
 
 | Level | What | When |
-|-------|------|------|
-| **Metadata** | Name + description (~100 words) | Always in context — used for triggering |
+| --- | --- | --- |
+| **Metadata** | Name \+ description (~100 words) | Always in context — used for triggering |
 | **SKILL.md body** | Full instructions | Loaded when the skill triggers |
 | **Bundled resources** | Scripts, references, assets | Loaded on demand |
 
@@ -59,28 +60,27 @@ This means skills don't bloat the agent's context until they're actually needed.
 
 ---
 
-## Skills vs. MCP Tools
+## Skills vs. Integrations
 
 OpenSwarm has two systems that extend what agents can do. They're complementary but different:
 
-| | Skills | MCP Tools |
-|---|--------|-----------|
-| **What they are** | Markdown instruction files | External tool servers |
-| **What they do** | Teach the agent *how* to do something | Give the agent *the ability* to do something |
-| **Example** | A skill that teaches proper Word doc formatting | A Gmail MCP tool that lets the agent send emails |
-| **Requires code?** | No (optional bundled scripts) | Yes (MCP server implementation) |
-| **Storage** | `~/.claude/skills/` as `.md` files | Connected MCP servers |
+|  | Skills | Integrations |
+| --- | --- | --- |
+| **What they are** | Markdown instruction files | External tools an agent can use |
+| **What they do** | Teach the agent _how_ to do something | Give the agent _the ability_ to do something |
+| **Example** | A skill that teaches proper Word doc formatting | A Gmail tool that lets the agent send emails |
+| **Storage** | `~/.claude/skills/` as `.md` files | Connected servers |
 
-A skill might *reference* MCP tools in its instructions (e.g., "use the Google Sheets tool to read the data, then format it like this..."), but the skill itself is not code — it's guidance.
+A skill might _reference_ an integration in its instructions (e.g., "use the Google Sheets integration to read the data, then format it like this..."), but the skill itself is not code — it's guidance.
 
 ---
 
 ## Types of Skills
 
 | Type | Description |
-|------|-------------|
-| **Local Skills** | Skills you create or install yourself — stored in `~/.claude/skills/` |
-| **Registry Skills** | Community skills from the [Anthropic Skills repository](https://github.com/anthropics/skills) — browsable and installable from within OpenSwarm |
+| --- | --- |
+| **Custom Skills** | Skills you create or install yourself — stored in `~/.claude/skills/` |
+| **Builtin Skills** | Community skills from the [Anthropic Skills repository](https://github.com/anthropics/skills) — browsable and installable from within OpenSwarm |
 | **AI-Generated Skills** | Skills created by the Skill Builder Agent from a plain English description |
 
 All three types work the same way once installed — the difference is just how they're authored.
@@ -93,12 +93,15 @@ All three types work the same way once installed — the difference is just how 
   <Card title="Built-in Skills" icon="box" href="/customization/skills/built-in">
     Explore the skills and tools that come ready to use with OpenSwarm.
   </Card>
+
   <Card title="Adding Skills to Agents" icon="plug" href="/customization/skills/adding-skills">
     Learn how to attach and configure skills on any agent.
   </Card>
+
   <Card title="Custom Skills" icon="wrench" href="/customization/skills/custom-skills">
     Build your own skills for any workflow or domain.
   </Card>
+
   <Card title="Skill Builder Agent" icon="robot" href="/customization/skills/skill-builder">
     Use OpenSwarm's built-in agent to generate custom skills for you.
   </Card>
