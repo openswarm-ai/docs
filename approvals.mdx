@@ -5,7 +5,7 @@ description: "What an OpenSwarm agent is and what it can do."
 
 <video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
 
-An **agent** in OpenSwarm is a Claude-powered AI that can do anything you can do on your computer — read and write files, run shell commands, search the web, control a browser, send emails, manage your calendar — and handle long-running, multi-step tasks autonomously.
+An **agent** in OpenSwarm can do anything you can do on your computer — read and write files, run commands, search the web, control a browser, send emails, manage your calendar — and handle long-running, multi-step tasks autonomously.
 
 Think of each agent as a teammate you can brief on a task and let loose, while you watch it work in real time.
 
@@ -16,14 +16,12 @@ Think of each agent as a teammate you can brief on a task and let loose, while y
 A regular chatbot takes a prompt and returns text. An OpenSwarm agent takes a prompt and **acts on it** — it plans, uses tools, reads results, adapts, and keeps going until the job is done or it needs your input.
 
 Agents can:
-- **Run shell commands** to install dependencies, run tests, start servers
-- **Read and write code** across your entire project
-- **Browse the web** via a real browser — navigating, clicking, filling forms
-- **Use MCP integrations** — Gmail, Google Calendar, Drive, Sheets, X/Twitter, Reddit, and any custom MCP server you connect
-- **Spawn sub-agents** to parallelize work or delegate specialized tasks
-- **Generate interactive apps** (Views) that render live on the dashboard
 
-All of this happens locally on your machine. No cloud relay, no third-party backend.
+- **Read, create, and modify files** across your entire filesystem
+- **Browse the web** via a real browser — navigating, clicking, filling forms
+- **Use integrations** — Gmail, Google Calendar, Drive, Sheets, X/Twitter, Reddit, and any custom integrations you connect
+- **Spawn sub-agents** to parallelize work or delegate specialized tasks
+- **Generate interactive apps** that render live on the dashboard
 
 ---
 
@@ -31,32 +29,18 @@ All of this happens locally on your machine. No cloud relay, no third-party back
 
 OpenSwarm isn't about running one agent — it's about running **many at once**.
 
-Each agent lives as a card on the [dashboard canvas](/dashboard/overview). You can have 10+ agents working simultaneously, each in its own git worktree so they never conflict. The dashboard gives you a bird's-eye view of everything that's happening.
+Each agent lives as a card in a [workspace canvas](/dashboard/overview). You can have infinite agents working simultaneously. The workspace gives you a bird's-eye view of everything that's happening.
 
 ### The swarm model
 
 1. You launch an agent from the toolbar and give it a task
-2. That agent can **spawn sub-agents** (via the `Agent` tool) — new cards appear on the canvas automatically
-3. Sub-agents can spawn **browser agents** that control browser cards visually
-4. Agents can **talk to each other** via `InvokeAgent` — querying another agent's full conversation context
-5. All tool approvals from all agents surface in one place — approve individually or batch with **Shift+A** / **Shift+D**
+2. That agent can spawn sub-agents, browsers, and execute actions as needed. 
+3. Permissions are set globally so you control what exactly an agent can or can't do.
+4. When human approval or insight is needed, a popup appears within that agent's chat.
 
-### Git worktree isolation
-
-Every agent operates in its own git worktree and branch. This means five agents can edit five different files (or even the same file) in parallel without merge conflicts. When they're done, you review and merge on your terms.
-
----
-
-## Agent lifecycle
-
-| Status | Meaning |
-|---|---|
-| **Draft** | Created but no message sent yet |
-| **Running** | Actively processing — reading files, running commands, calling tools |
-| **Waiting for approval** | Paused on a tool call that needs your permission |
-| **Completed** | Finished its task |
-| **Stopped** | You manually stopped it (can be resumed) |
-| **Error** | Something went wrong |
+<Note>
+  In the center of the Open Swarm application's header, you can also find the floating island bubble. This gives you a quick overview of all agent states. If human input is needed, this floating island will morph into an input field that you can interact with.
+</Note>
 
 ---
 
@@ -72,14 +56,18 @@ Agents run in a **mode** that controls their behavior — which tools are availa
 
 You can also create **custom modes** with your own system prompts and tool restrictions. Switch modes at any time from the [chat input](/agent/chat-input).
 
+<Note>
+  99% of the time, the default "Agent" mode is all you need. Modes are helpful when you want holistic, re-usable, presets for how agents behave.
+</Note>
+
 ---
 
 ## Models
 
-Each agent can use a different Claude model:
+Each agent is powered by an Ai Model which you can select. Here is a brief overview of the models:
 
 | Model | Best for |
-|---|---|
+| --- | --- |
 | **Sonnet 4.6** | Fast, capable, good default for most tasks |
 | **Opus 4.6** | Most capable, best for complex reasoning and long-horizon tasks |
 | **Haiku 3.5** | Fastest and cheapest, good for simple tasks |
@@ -88,18 +76,20 @@ You can switch models mid-conversation — the new model takes effect on the nex
 
 ---
 
-## Tool approvals
+## Integration approvals
 
-When an agent wants to use a tool, it may need your permission depending on how that tool is configured:
+When an agent wants to use an integration, it may need your permission depending on how that integration is configured:
 
 - **Allow** — runs automatically, no approval needed
 - **Ask** — pauses and shows you exactly what it's about to do (the command, the file, the API call) so you can approve or deny
 - **Deny** — blocked entirely
 
-You can approve or deny individually, or use **Shift+A** / **Shift+D** to batch-approve/deny all pending requests across every agent on the dashboard.
+<Note>
+  You can set these permissions in the Integrations page.
+</Note>
 
 ---
 
 ## Cost tracking
 
-Every agent session tracks token usage and cost in real time. A context window ring in the chat input shows how much of the 200K context window has been consumed.
+Every agent session tracks token usage and cost in real time. A context window ring in the chat input shows how much of the context window has been consumed.
