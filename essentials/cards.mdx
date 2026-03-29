@@ -32,49 +32,25 @@ Every item on the dashboard canvas is a **card**. Cards can be freely moved, res
 
 Agent cards are live chat sessions with an AI agent. Each card corresponds to one conversation.
 
-
-<style>{`
-  .status-pill {
-    display: inline-flex;
-    align-items: center;
-    height: 22px;
-    padding: 0 8px;
-    border-radius: 16px;
-    font-weight: 600;
-    font-size: 0.7rem;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-  .status-pill-running   { background-color: #E9F1DC; color: #265B19; }
-  .status-pill-waiting   { background-color: #F6EEDF; color: #805C1F; }
-  .status-pill-completed { background-color: #F5F4ED; color: #73726C; }
-  .status-pill-error     { background-color: #FEE2E2; color: #B53333; }
-
-  .dark .status-pill-running   { background-color: #1B4614; color: #7AB948; }
-  .dark .status-pill-waiting   { background-color: #483A0F; color: #D1A041; }
-  .dark .status-pill-completed { background-color: #1f1e1b; color: #9C9A92; }
-  .dark .status-pill-error     { background-color: #3D1515; color: #DD5353; }
-`}</style>
-
 ### States
 
 The header badge reflects the card's current status:
 
 <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "4px" }}>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-    <span className="status-pill status-pill-running">running</span>
+    <span className="inline-flex items-center h-[22px] px-2 rounded-full font-semibold text-[0.7rem] leading-none shrink-0 bg-[#E9F1DC] text-[#265B19] dark:bg-[#1B4614] dark:text-[#7AB948]">running</span>
     <span style={{ fontSize: "0.9rem" }}>Agent is actively executing</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-    <span className="status-pill status-pill-waiting">waiting approval</span>
+    <span className="inline-flex items-center h-[22px] px-2 rounded-full font-semibold text-[0.7rem] leading-none shrink-0 bg-[#F6EEDF] text-[#805C1F] dark:bg-[#483A0F] dark:text-[#D1A041]">waiting approval</span>
     <span style={{ fontSize: "0.9rem" }}>Paused — awaiting your sign-off on a tool call</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-    <span className="status-pill status-pill-completed">completed</span>
+    <span className="inline-flex items-center h-[22px] px-2 rounded-full font-semibold text-[0.7rem] leading-none shrink-0 bg-[#F5F4ED] text-[#73726C] dark:bg-[#1f1e1b] dark:text-[#9C9A92]">completed</span>
     <span style={{ fontSize: "0.9rem" }}>Finished or manually stopped</span>
   </div>
   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-    <span className="status-pill status-pill-error">error</span>
+    <span className="inline-flex items-center h-[22px] px-2 rounded-full font-semibold text-[0.7rem] leading-none shrink-0 bg-[#FEE2E2] text-[#B53333] dark:bg-[#3D1515] dark:text-[#DD5353]">error</span>
     <span style={{ fontSize: "0.9rem" }}>Something went wrong</span>
   </div>
 </div>
