@@ -151,7 +151,8 @@
     "color": {
       "light": "#F5F5F0",
       "dark": "#1a1918"
-    }
+    },
+    "decoration": "grid"
   },
   "fonts": {
     "family": "Lora"
