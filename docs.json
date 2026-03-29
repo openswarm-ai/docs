@@ -52,7 +52,8 @@
               "essentials/toolbar",
               "essentials/cards",
               "essentials/navigation-1",
-              "essentials/selection"
+              "essentials/selection",
+              "essentials/header"
             ]
           },
           {

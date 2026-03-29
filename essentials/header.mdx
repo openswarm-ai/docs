@@ -1,0 +1,61 @@
+---
+title: "Header"
+description: "The name pill and card navigator in the top-left of the dashboard."
+---
+
+<video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
+
+The **Dashboard Header** sits in the top-left corner of the canvas. It shows the current dashboard's name and provides a quick-access navigator for jumping to any card.
+
+---
+
+## Dashboard name
+
+The header displays the name of the current dashboard. Names are auto-generated when the dashboard is first created (using AI to pick a descriptive title based on what's in it), and can be renamed from the sidebar.
+
+---
+
+## Card navigator dropdown
+
+If the dashboard has any cards on it, clicking the name pill opens a **dropdown panel** listing all cards grouped by type:
+
+| Section | Contents |
+|---|---|
+| **Agents** | All active (non-draft) agent sessions, with status dot and status label |
+| **Views** | All embedded view cards, by output name |
+| **Browsers** | All browser cards, with the current tab title and URL |
+
+### Status dots (agent entries)
+
+| Color | Meaning |
+|---|---|
+| 🟢 Green | Running |
+| 🟡 Amber | Waiting for approval |
+| ⚫ Slate | Completed or Stopped |
+| 🔴 Red | Error |
+| 🟣 Indigo | Draft |
+
+### Jumping to a card
+
+Clicking any item in the dropdown **focuses** the canvas on that card:
+- The canvas smoothly pans and zooms to center the card in the viewport (at 1:1 zoom, animated).
+- The card briefly glows to indicate which one was selected.
+- The dropdown closes automatically.
+
+### Closing the dropdown
+
+Click anywhere outside the dropdown panel to close it.
+
+---
+
+## Keyboard shortcuts reference
+
+The header itself doesn't have keyboard shortcuts, but the canvas shortcuts below work from the dashboard view:
+
+| Key | Action |
+|---|---|
+| **d** | Go to Dashboard (from any page) |
+| **1–9** | Open agent by position |
+| **?** | Show keyboard shortcuts help overlay |
+| **Shift+A** | Approve all pending tool calls |
+| **Shift+D** | Deny all pending tool calls |
