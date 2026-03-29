@@ -29,16 +29,6 @@ The fastest way to get started. OpenSwarm ships as a standalone macOS `.dmg` —
 
     Open the `.dmg`, drag **OpenSwarm** into your Applications folder, and launch it.
   </Step>
-  <Step title="Spawn your first agent">
-    You'll land on an **infinite canvas** — your mission control. Click **\+ New Agent** to create your first agent card.
-
-    Give it a task. Watch it go.
-  </Step>
-  <Step title="Explore the dashboard">
-    - **Approvals** — All agent tool calls surface in one place. Approve, deny, or edit before execution.
-    - **Cost tracker** — Real-time USD spend per agent, always visible.
-    - **Agent modes** — Switch between Agent, Ask, Plan, App Builder, and Skill Builder to scope what each agent can do.
-  </Step>
 </Steps>
 
 <Note>
@@ -55,25 +45,22 @@ For developers who want to run from source, contribute, or build on top of OpenS
 
 - **Node.js** 18\+ and **npm**
 - **Python** 3.11\+ (or use the bundled runtime)
-- An **Anthropic API key**
 
 ### Setup
 
 <Steps>
-  <Step title="Clone the repository">
+  <Step title="Clone the repository & open it's root directory">
     ```bash
-    git clone https://github.com/openswarm/openswarm.git
-    cd openswarm
+    git clone https://github.com/openswarm/openswarm.git && cd openswarm
     ```
   </Step>
-  <Step title="Run Open Swarm">
+  <Step title="Create the .env file">
     ```bash
-    # Frontend
-    npm install
-    
-    # Backend
-    cd backend && pip install -r requirements.txt && cd ..
+    cp backend/.env.example backend/.env
     ```
+  </Step>
+  <Step title="Fill in the .env variables">
+    Set your anthropic keys, google auth credentials, etc.
   </Step>
   <Step title="Run the app">
     ```bash
