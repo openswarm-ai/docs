@@ -1,0 +1,138 @@
+---
+title: "MCP Registry & Custom Actions"
+description: "Browse, install, and configure MCP servers to extend your agent's capabilities."
+---
+
+Beyond the built-in actions and first-party integrations, you can add **any MCP server** to OpenSwarm — either from the public MCP registry or by manually configuring a custom server.
+
+## The MCP Registry
+
+OpenSwarm includes a built-in MCP registry browser that aggregates servers from two sources:
+
+- **Community** — the official [Model Context Protocol registry](https://registry.modelcontextprotocol.io), containing hundreds of community-contributed servers
+- **Google** — Google's catalog of MCP servers for their Cloud and Workspace services
+
+The registry is cached locally and refreshed every hour in the background. GitHub star counts are fetched and cached alongside each server entry.
+
+### Browsing the Registry
+
+Open the registry from **New Action → Browse MCP Registry** in the Action Library. You can:
+
+- **Search** by name, title, description, or keywords
+- **Filter** by source (Community or Google)
+- **Sort** by name or GitHub stars
+- **Load more** results with pagination (20 servers per page)
+
+Each server card shows its name, description, star count, source badge, and links to the repository/website.
+
+### Installing from the Registry
+
+Click **Install** on any server to add it as an action. What happens next depends on the server type:
+
+<Tabs>
+  <Tab title="stdio server (with known config)">
+    OpenSwarm automatically derives the MCP config from the repository URL (e.g., `npx -y github:owner/repo`) and installs it immediately. Tool discovery runs automatically after install.
+  </Tab>
+  <Tab title="Remote server (Google Cloud)">
+    Google remote servers are installed with OAuth2 auth type. After installing, click **Connect Google** to authorize, then discovery runs to populate the available actions.
+  </Tab>
+  <Tab title="Server requiring configuration">
+    If OpenSwarm can't auto-derive the config, a configuration dialog opens where you can:
+    - Edit the MCP config JSON (transport type, command, args, URL)
+    - Set the auth type (`none` or `env_vars`)
+    - Provide environment variable credentials
+  </Tab>
+</Tabs>
+
+## Adding a Custom MCP Server
+
+If your server isn't in the registry, use **New Action → Create Custom** to add it manually.
+
+You need to provide:
+- **Name** — a display name for the action
+- **Description** — what the server does
+- **Command** — the shell command to run (for stdio servers)
+
+After creation, you can edit the tool's MCP config to set the full connection details.
+
+## MCP Config Structure
+
+Every MCP action has an `mcp_config` that tells OpenSwarm how to connect. The three supported transport types:
+
+### stdio
+
+The server runs as a local subprocess. OpenSwarm spawns it and communicates over stdin/stdout.
+
+```json
+{
+  "type": "stdio",
+  "command": "npx",
+  "args": ["-y", "@checkra1n/xbird"],
+  "env": {
+    "SOME_API_KEY": "your-key"
+  }
+}
+```
+
+<Info>
+OpenSwarm resolves commands against `PATH` and common user-local bin directories — including `~/.bun/bin`, `~/.cargo/bin`, `~/.local/bin`, `~/.volta/bin`, nvm/fnm node versions, and `/opt/homebrew/bin`. You don't need to specify absolute paths.
+</Info>
+
+### http (Streamable HTTP)
+
+The server exposes a single HTTP endpoint that accepts JSON-RPC POST requests.
+
+```json
+{
+  "type": "http",
+  "url": "https://mcp.example.com/v1",
+  "headers": {
+    "Authorization": "Bearer your-token"
+  }
+}
+```
+
+### sse (Server-Sent Events)
+
+The legacy SSE transport — the server exposes a GET endpoint for event streams and a POST endpoint for messages.
+
+```json
+{
+  "type": "sse",
+  "url": "https://mcp.example.com/sse",
+  "headers": {
+    "Authorization": "Bearer your-token"
+  }
+}
+```
+
+<Note>
+When connecting to an `http` server, OpenSwarm tries Streamable HTTP first. If that fails, it automatically falls back to SSE transport.
+</Note>
+
+## Tool Discovery
+
+After installing an MCP server, OpenSwarm runs **tool discovery** — it connects to the server, sends an `initialize` handshake, and calls `tools/list` to enumerate all available actions.
+
+Discovery does three things:
+
+1. **Enumerates tools** — gets the name, description, and input schema for every action the server supports
+2. **Categorizes actions** — automatically classifies each action as `read` or `write` based on its name prefix:
+   - Read prefixes: `get`, `list`, `read`, `search`, `fetch`, `find`, `query`, `browse`, `check`, `describe`, `show`, `download`, `analyze`, `explain`
+   - Write prefixes: `create`, `write`, `delete`, `update`, `send`, `remove`, `modify`, `add`, `set`, `put`, `post`, `insert`, `move`, `copy`, `rename`
+3. **Groups by service** — maps actions to logical services (e.g., Gmail, Calendar, Drive) and provider groups (e.g., Google, Twitter, Reddit) for organized permission management
+
+You can re-run discovery at any time by clicking the **refresh** button on an installed action. This is useful after a server updates its available tools.
+
+## Credential Injection
+
+OpenSwarm automatically injects credentials into MCP server connections based on transport type:
+
+| Transport | Auth Type | How Credentials Are Injected |
+|---|---|---|
+| stdio | `env_vars` | Credentials are set as environment variables in the subprocess |
+| stdio | `oauth2` | OAuth access token set as `OAUTH_ACCESS_TOKEN` env var. Refresh token, client ID, and client secret also injected. |
+| http / sse | `env_vars` | Credentials with key names like `authorization` or `api_key` are set as `Authorization: Bearer` headers |
+| http / sse | `oauth2` | OAuth access token set as `Authorization: Bearer` header |
+
+For stdio servers, OpenSwarm also augments the `PATH` environment variable to include common package manager bin directories, ensuring commands like `npx`, `bunx`, and `uvx` resolve correctly even in packaged app environments.

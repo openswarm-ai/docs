@@ -67,14 +67,24 @@
           {
             "group": "Customization",
             "pages": [
-              "essentials/navigation",
               "essentials/modes",
               {
                 "group": "Skills",
+                "icon": "head-side-brain",
                 "pages": [
                   "overview",
                   "a",
                   "b"
+                ]
+              },
+              {
+                "group": "Actions",
+                "icon": "bolt",
+                "pages": [
+                  "a-1",
+                  "b-1",
+                  "c",
+                  "d"
                 ]
               }
             ]

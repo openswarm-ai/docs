@@ -1,0 +1,148 @@
+---
+title: "Built-in Actions"
+description: "Core tools, extended tools, browser automation, and first-party service integrations."
+---
+
+The Action Library ships with built-in actions from the Claude Agent SDK and first-party integrations for popular services. Everything is managed from the **Action Library** page in the sidebar.
+
+## Built-in Action Sets
+
+Built-in actions are organized into collapsible sections, each with its own enable/disable toggle.
+
+### Core Actions
+
+These are always loaded into every agent session (unless disabled). They cover fundamental operations:
+
+| Action | Category | Description |
+|---|---|---|
+| `Read` | Filesystem | Read files and directories |
+| `Edit` | Filesystem | Make targeted edits using search and replace |
+| `Write` | Filesystem | Create new files or overwrite existing ones |
+| `Bash` | System | Execute shell commands in a terminal |
+| `Glob` | Search | Find files matching glob and wildcard patterns |
+| `Grep` | Search | Search file contents using regular expressions |
+| `AskUserQuestion` | Interaction | Ask the user a question and wait for a response |
+
+### Extended Actions (On-Demand)
+
+Extended actions are **deferred** — they aren't loaded at session start. Instead, the agent discovers them via `ToolSearch` when it needs them. This keeps the base tool set lean.
+
+| Action | Category | Description |
+|---|---|---|
+| `WebSearch` | Search | Search the web for real-time information |
+| `WebFetch` | Search | Fetch and read content from a URL |
+| `NotebookEdit` | Filesystem | Edit Jupyter notebook cells |
+| `TodoWrite` | Planning | Write and manage a structured todo list |
+| `EnterPlanMode` | Planning | Enter plan mode for designing solutions |
+| `ExitPlanMode` | Planning | Exit plan mode and return to execution |
+| `EnterWorktree` | System | Enter a git worktree for isolated work |
+| `TaskOutput` | System | Read output from a background task |
+| `TaskStop` | System | Stop a running background task |
+| `CronCreate` | Scheduling | Create a scheduled or recurring task |
+| `CronList` | Scheduling | List all scheduled tasks |
+| `CronDelete` | Scheduling | Delete a scheduled task |
+| `RenderOutput` | Views | Render a reusable View artifact with structured input data |
+
+<Info>
+Extended actions appear with an **on-demand** badge in the UI. The agent will only load them when relevant to the current task.
+</Info>
+
+### Browser Actions
+
+Browser automation is split into two layers:
+
+**Delegation layer** — what the main agent calls:
+
+| Action | Description |
+|---|---|
+| `CreateBrowserAgent` | Create a new browser and run a task on it |
+| `BrowserAgent` | Delegate a task to an existing browser agent |
+| `BrowserAgents` | Run multiple browser tasks in parallel |
+
+**Action layer** — what the browser sub-agent executes:
+
+| Action | Description |
+|---|---|
+| `BrowserScreenshot` | Capture a screenshot of the page |
+| `BrowserNavigate` | Navigate to a URL |
+| `BrowserClick` | Click an element by CSS selector |
+| `BrowserType` | Type text into an input element |
+| `BrowserEvaluate` | Execute JavaScript in the browser |
+| `BrowserGetText` | Get visible text content of the page |
+| `BrowserGetElements` | List interactive elements with CSS selectors |
+| `BrowserScroll` | Scroll the page up or down |
+| `BrowserWait` | Wait for page loads or animations |
+
+<Note>
+The main agent never calls browser action tools directly. It delegates via `CreateBrowserAgent` or `BrowserAgent`, and a sub-agent handles the low-level browser interactions autonomously.
+</Note>
+
+### Apps (Views)
+
+If you've created [Views](/customization/views), they appear here as an additional action set. Each View is exposed as a `RenderOutput` call that the agent can invoke to display data. Views have their own per-item permission toggles.
+
+## Enabling and Disabling Sections
+
+Each action set has a **toggle switch** in its header. Disabling a section sets all of its actions to `deny`, which means agents cannot use any of them. Re-enabling restores them to `always_allow`.
+
+You can also control permissions at a more granular level — see [Permissions](/customization/actions/permissions).
+
+---
+
+## First-Party Integrations
+
+Integrations are pre-configured MCP server connections for popular services. They appear in their own section of the Action Library.
+
+### Google Workspace
+
+<Steps>
+  <Step title="Enable the integration">
+    Toggle Google Workspace on in the integrations section. This creates the MCP tool entry with OAuth2 configured.
+  </Step>
+  <Step title="Connect your account">
+    Click **Connect Google**. A popup opens the Google OAuth consent screen. Sign in and grant the requested scopes:
+    - Gmail (read & modify)
+    - Calendar (full access)
+    - Drive (full access)
+    - Contacts (read-only)
+  </Step>
+  <Step title="Actions are discovered automatically">
+    After OAuth completes, OpenSwarm calls the MCP server's `tools/list` endpoint and populates all available actions (Docs, Sheets, Slides, Calendar, Gmail, Drive, etc.) with their permission controls.
+  </Step>
+</Steps>
+
+Once connected, the integration shows the connected account email (e.g., `you@gmail.com`) and you can disconnect or switch accounts at any time.
+
+<Warning>
+OAuth requires `GOOGLE_OAUTH_CLIENT_ID` and `GOOGLE_OAUTH_CLIENT_SECRET` to be set in your backend environment. In the packaged app, place these in `~/.openswarm.env` or `~/Library/Application Support/OpenSwarm/.env`.
+</Warning>
+
+**Token refresh** is handled automatically. When an access token expires, OpenSwarm uses the stored refresh token to obtain a new one before the next agent session starts. If refresh fails, you'll be prompted to reconnect.
+
+### Twitter / X (via xbird)
+
+<Steps>
+  <Step title="Enable the integration">
+    Toggle xbird on. This installs the xbird MCP server (`bunx @checkra1n/xbird`).
+  </Step>
+  <Step title="Provide credentials">
+    Click **Connect** and enter your `auth_token` and `ct0` cookie values from x.com. To find these: open x.com in your browser, press F12, go to Application → Cookies → x.com, and copy the values.
+  </Step>
+  <Step title="Actions are discovered">
+    OpenSwarm syncs credentials to `~/.config/xbird/config.json` and discovers all available actions (search tweets, read profiles, post, like, follow, etc.).
+  </Step>
+</Steps>
+
+The connected account handle (e.g., `@yourhandle`) is displayed after successful connection.
+
+### Reddit
+
+Reddit requires **no authentication**. Toggle it on, and OpenSwarm installs the `reddit-mcp-buddy` server via npx. Actions (browse subreddits, search posts, get post details, user analysis) are discovered immediately.
+
+## Disconnecting an Integration
+
+For **OAuth integrations** (Google Workspace): clicking Disconnect revokes the token on Google's side and clears the stored tokens locally. You can then reconnect with a different account.
+
+For **credential-based integrations** (xbird): disconnecting clears the stored credentials and removes them from the external config file.
+
+Disabling an integration (toggling it off) does **not** disconnect it — it just prevents agents from using it. Your credentials and connection remain intact so you can re-enable without re-authenticating.

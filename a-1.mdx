@@ -1,0 +1,56 @@
+---
+title: "Overview"
+description: "Understand the Action Library — the system that controls what your agents can do."
+---
+
+Actions are the capabilities available to your AI agents. Every tool call an agent makes — reading a file, sending an email, searching the web — is an **action**. The Action Library is where you configure which actions are available, how they're authenticated, and what permissions they require.
+
+## The Three Layers
+
+OpenSwarm organizes actions into three layers:
+
+<CardGroup cols={3}>
+  <Card title="Built-in Actions" icon="lock">
+    Core and extended tools from the Claude Agent SDK — file operations, shell commands, search, browser automation, and more.
+  </Card>
+  <Card title="Integrations" icon="plug">
+    First-party connectors for services like Google Workspace, Twitter/X, and Reddit. These connect via OAuth or credentials.
+  </Card>
+  <Card title="MCP Actions" icon="store">
+    Any MCP (Model Context Protocol) server — installed from the public registry or added manually. This is the primary extension point.
+  </Card>
+</CardGroup>
+
+## How Actions Flow Into Agent Sessions
+
+When an agent session starts, OpenSwarm assembles the full set of available actions:
+
+1. **Built-in actions** that are enabled (not denied) are loaded directly into the session.
+2. **Deferred actions** (like `WebSearch`, `TodoWrite`, `CronCreate`) are loaded on-demand when the agent calls `ToolSearch`.
+3. **MCP integrations** are connected as MCP server processes. OpenSwarm derives the connection config — resolving commands, injecting credentials and OAuth tokens, and augmenting `PATH` — then passes them to the Claude Agent SDK as `mcp_servers`.
+
+Each action is also subject to its [permission policy](/customization/actions/permissions), which determines whether the agent can execute it freely, must ask the user first, or is blocked entirely.
+
+## Action Types at a Glance
+
+| Type | Examples | Auth | Loaded |
+|---|---|---|---|
+| Core built-in | `Read`, `Edit`, `Write`, `Bash`, `Glob`, `Grep` | None | Always |
+| Extended built-in | `WebSearch`, `WebFetch`, `NotebookEdit`, `CronCreate` | None | On-demand via ToolSearch |
+| Browser | `CreateBrowserAgent`, `BrowserClick`, `BrowserNavigate` | None | Always |
+| Integration | Google Workspace, Twitter/X, Reddit | OAuth2 or credentials | When enabled |
+| Custom MCP | Any MCP server (stdio, HTTP, SSE) | Varies | When enabled |
+
+## What's Next
+
+<CardGroup cols={3}>
+  <Card title="Built-in Actions & Integrations" icon="wrench" href="/customization/actions/built-in">
+    Learn about every built-in tool and first-party integration.
+  </Card>
+  <Card title="Permissions" icon="shield-check" href="/customization/actions/permissions">
+    Control what agents can do with granular permission policies.
+  </Card>
+  <Card title="MCP Registry" icon="store" href="/customization/actions/mcp-registry">
+    Browse, install, and configure MCP servers.
+  </Card>
+</CardGroup>
