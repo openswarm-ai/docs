@@ -51,8 +51,8 @@
               "essentials/overview",
               "essentials/toolbar",
               "essentials/cards",
-              "essentials/markdown",
-              "essentials/code"
+              "essentials/navigation-1",
+              "essentials/selection"
             ]
           },
           {

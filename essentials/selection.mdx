@@ -1,0 +1,75 @@
+---
+title: "Selection"
+description: "Selecting, moving, and copying cards on the dashboard canvas."
+---
+
+The dashboard supports multi-card selection, letting you move, copy, or operate on multiple cards at once.
+
+---
+
+## Selecting cards
+
+### Click to select
+
+Click on any card to select it. A visual highlight (ring or glow) appears around selected cards.
+
+Clicking a card that is already selected **deselects** it.
+
+Clicking on empty canvas space deselects all.
+
+### Shift + click
+
+Hold **Shift** and click a card to **add it to the current selection** (or remove it if already selected). This lets you build up a selection one card at a time.
+
+### Marquee select (drag to select)
+
+Click and drag on **empty canvas space** (not on a card) to draw a selection rectangle. Any card that intersects the rectangle is selected when you release.
+
+- The marquee box is drawn in canvas-space, so it works correctly at any zoom level.
+- Hold **Shift** while dragging to **toggle** intersected cards — cards already selected are deselected, and unselected cards are added.
+- The marquee is drawn with a semi-transparent overlay so you can see what's being captured.
+
+<Note>
+  Marquee selection is disabled while **element selection mode** (for attaching page elements as context) is active.
+</Note>
+
+### Deselect all
+
+- Click on empty canvas space
+- Press **Escape**
+
+---
+
+## Moving multiple cards
+
+When multiple cards are selected, **dragging any one of them** moves the entire selection together.
+
+The drag delta is applied to all selected cards simultaneously — their relative positions are preserved.
+
+Cards that are not selected are not affected.
+
+---
+
+## Copy & paste
+
+Selected cards (agent cards, view cards, and browser cards) can be copied and pasted onto the canvas.
+
+Use standard system shortcuts:
+- **⌘C** — copy selected cards to the dashboard clipboard
+- **⌘V** — paste the clipboard cards onto the canvas, offset slightly from their original positions
+
+The clipboard persists within the session (not across app restarts).
+
+---
+
+## Keyboard reference
+
+| Key | Action |
+|---|---|
+| **Click** | Select card / deselect if already selected |
+| **Shift + Click** | Add/remove card from selection |
+| **Drag on canvas** | Marquee-select |
+| **Shift + Drag** | Marquee-toggle |
+| **Escape** | Deselect all |
+| **⌘C** | Copy selected cards |
+| **⌘V** | Paste copied cards |
