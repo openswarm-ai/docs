@@ -92,8 +92,8 @@
     ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/images/LogoDark.png",
+    "dark": "/images/LogoLight.png"
   },
   "navbar": {
     "links": [
@@ -135,6 +135,6 @@
     }
   },
   "fonts": {
-    "family": "Open Sans"
+    "family": "Lora"
   }
 }
