@@ -35,7 +35,7 @@
     },
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Documentation",
         "groups": [
           {
             "group": "Getting started",
@@ -46,33 +46,31 @@
             ]
           },
           {
+            "group": "Workspaces",
+            "pages": [
+              "essentials/markdown",
+              "essentials/code"
+            ]
+          },
+          {
             "group": "Customization",
             "pages": [
               "essentials/settings",
-              "essentials/navigation"
+              "essentials/navigation",
+              "essentials/modes"
             ]
           },
           {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
+            "group": "Apps",
             "pages": [
               "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
+              "ai-tools/claude-code"
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
+        "tab": "Use Cases",
         "groups": [
           {
             "group": "API documentation",
