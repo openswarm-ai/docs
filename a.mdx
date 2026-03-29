@@ -1,0 +1,75 @@
+---
+title: "Using Skils"
+description: "How to install skills and use them in conversations with your agents."
+---
+
+## Installing a Skill
+
+A skill does nothing until it's installed. Whether it's from the registry or one you built yourself, the process is the same:
+
+1. Go to the **Skills** page
+2. Browse or search for a skill in the sidebar
+3. Click on the skill to preview its content
+4. Click **Install**
+
+The skill is now saved and available to all your agents.
+
+<Note>
+  If you want to modify a registry skill before installing, click **Edit & Install** instead. This opens the skill in an editor where you can tweak the name, description, or instructions before saving. You can always edit a skill after it's installed too.
+</Note>
+
+---
+
+## How Agents Use Skills
+
+Once a skill is installed, agents will **automatically use it when relevant**. You don't need to tell the agent about the skill or configure anything per-agent.
+
+Here's what happens behind the scenes:
+
+1. Every installed skill's **name and description** are always visible to the agent
+2. When you send a message, the agent scans those descriptions to see if any match your request
+3. If a skill matches, the agent loads its full instructions and follows them
+
+For example, if you have the **docx** skill installed and you say _"Create a project proposal as a Word document"_, the agent will recognize the match from the skill's description, load the full skill instructions, and follow them to produce the document.
+
+You don't have to do anything — it just works.
+
+---
+
+## Forcing a Skill with `/` Commands
+
+Sometimes you want to **guarantee** the agent uses a specific skill for a message, rather than leaving it up to the agent's judgment. That's what `/` commands are for.
+
+In the chat input, type `/` to open the command picker. Your installed skills appear under the **Skills** category. Select one, and it gets attached to your message.
+
+When you send a message with a skill attached this way, the agent is **forced to use that skill** — its full content is injected into the conversation regardless of whether the agent would have triggered it on its own.
+
+This is useful when:
+
+- The agent isn't picking up on a skill automatically (the description might need tuning)
+- You want to use a skill for a task that's adjacent to its description but not an exact match
+- You want to be explicit about which skill guides the agent's behavior
+
+<Tip>
+  You can attach multiple skills to a single message by selecting more than one from the `/` picker. Each appears as a separate pill in the input.
+</Tip>
+
+---
+
+## Editing & Deleting Skills
+
+From the **Skills** page, click on any skill under **My Skills** in the sidebar:
+
+- **Edit** (pencil icon) — Opens a dialog where you can update the name, description, command, or content
+- **Delete** (trash icon) — Removes the skill. Agents will no longer have access to it.
+
+---
+
+## Summary
+
+| Action | How |
+| --- | --- |
+| **Install a skill** | Skills page → click skill → **Install** |
+| **Let agents use it automatically** | Just install it — agents match skills by description |
+| **Force a skill on a message** | Type `/` in chat → select the skill → send |
+| **Edit or delete** | Skills page → My Skills → pencil or trash icon |

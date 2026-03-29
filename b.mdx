@@ -1,0 +1,151 @@
+---
+title: "Creating Skills"
+description: "How to create skills manually or with the AI-powered Skill Builder."
+---
+
+There are two ways to create a skill in OpenSwarm: write one yourself using the manual editor, or describe what you want and let the Skill Builder generate it for you.
+
+---
+
+## Creating a Skill Manually
+
+### Open the Editor
+
+On the **Skills** page, click the **+** button in the sidebar header. This opens the **New Skill** dialog with four fields:
+
+| Field | What It Does |
+|-------|-------------|
+| **Name** | The skill's display name (e.g., "Cover Letter Writer") |
+| **Description** | Tells agents when to use this skill — the most important field |
+| **Command** | The `/` command identifier used in chat (e.g., `cover-letter`) |
+| **Content** | The full instructions the agent follows when the skill triggers |
+
+### Writing the Description
+
+The description is the trigger. Agents read it to decide whether to activate the skill, so it needs to clearly cover both *what* the skill does and *when* to use it.
+
+Bad:
+```
+Helps write letters.
+```
+
+Good:
+```
+Use this skill whenever the user wants to write a cover letter, application
+letter, or letter of interest for a job or program. Trigger for any mention
+of "cover letter", "application letter", or requests to write a professional
+letter addressed to a hiring manager or admissions committee.
+```
+
+Agents tend to under-trigger rather than over-trigger, so err on the side of being explicit about when the skill should activate.
+
+### Writing the Content
+
+The content field is Markdown — this is what the agent actually follows when the skill is active. A good skill includes:
+
+**A clear workflow:**
+```markdown
+## Steps
+1. Ask the user for the role, company, and any specific points to hit
+2. Draft the letter in a professional but warm tone
+3. Keep it under one page
+4. Output as plain text unless the user asks for a .docx
+```
+
+**Output format expectations:**
+```markdown
+## Format
+Use this structure:
+- Opening: why you're writing and what role
+- Body: 2-3 paragraphs connecting experience to the role
+- Close: call to action and sign-off
+```
+
+**Examples:**
+```markdown
+## Example
+
+**Input:** "Write a cover letter for a senior product manager role at Stripe.
+I have 6 years of PM experience at fintech startups."
+
+**Output:** A one-page letter that opens with enthusiasm for Stripe's mission,
+connects the candidate's fintech PM background to the role requirements,
+and closes with a request for an interview.
+```
+
+Explain *why* things matter instead of just listing rigid rules — agents respond better to reasoning than to `ALWAYS` / `NEVER` directives.
+
+### The `/` Command
+
+The command field determines how the skill appears in the chat input's `/` picker. Keep it short, lowercase, and hyphenated:
+
+- `cover-letter`
+- `docx`
+- `code-review`
+- `data-viz`
+
+Users type `/` in chat and see this command alongside the skill name and description.
+
+---
+
+## Creating a Skill with the Skill Builder
+
+The Skill Builder is an AI agent that generates skills for you through conversation. You describe what you want, it writes the `SKILL.md`.
+
+### Opening the Skill Builder
+
+On the **Skills** page, click **Build with AI** in the sidebar (or the ✨ button in the bottom-right corner). A resizable chat panel opens in the corner of the screen.
+
+### Describe What You Want
+
+Tell the Skill Builder what the skill should do. Be specific — the more detail you provide, the better the output.
+
+Examples:
+
+> *"I want a skill that generates SQL migration scripts for Postgres. It should handle adding columns, renaming tables, and creating indexes. Output should be idempotent."*
+
+> *"Build a skill for writing incident post-mortems. It should follow our template: summary, timeline, root cause, action items. Tone should be blameless."*
+
+> *"Create a skill that formats code review feedback — organize comments by severity (critical, major, minor, nit) and suggest specific fixes for each."*
+
+The Skill Builder will ask clarifying questions if it needs more context — what tools to use, edge cases to handle, output format preferences, etc.
+
+### Live Preview
+
+As the Skill Builder works, you'll see a **live preview** of the generated skill in the main panel. This shows:
+- The skill name and description
+- The `/` command
+- The full rendered Markdown content
+
+The preview updates in real time as the agent writes.
+
+### Iterating
+
+The Skill Builder supports a full feedback loop:
+
+1. It generates a draft
+2. You review the preview
+3. You tell it what to change — *"make the description more specific"*, *"add an example for edge case X"*, *"the output format should be JSON, not plain text"*
+4. It revises and you review again
+
+Keep going until you're happy with the result.
+
+### Saving
+
+Once you're satisfied, click **Save Skill** in the Skill Builder header. The skill is saved to `~/.claude/skills/` and immediately available — agents can use it right away, and it appears in the `/` command picker.
+
+To start over, click the **↻** reset button. This clears the session without affecting previously saved skills.
+
+---
+
+## What Makes a Good Skill
+
+Regardless of how you create it, a good skill has:
+
+| Quality | Why |
+|---------|-----|
+| **Specific description** | Agents match skills by description — vague = never triggered |
+| **Clear workflow** | Step-by-step instructions the agent can follow without guessing |
+| **Examples** | Concrete input/output pairs anchor the agent's behavior |
+| **Reasoning over rules** | Explain *why* → agent generalizes. Rigid rules → agent follows blindly |
+| **Focused scope** | One skill, one domain. Don't build an "everything skill" |

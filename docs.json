@@ -73,10 +73,8 @@
                 "group": "Skills",
                 "pages": [
                   "overview",
-                  "built-in-skills",
-                  "adding-skills",
-                  "custom-skills",
-                  "skill-builder"
+                  "a",
+                  "b"
                 ]
               }
             ]
