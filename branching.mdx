@@ -5,7 +5,7 @@ description: "Reading, editing, and navigating conversation history."
 
 <video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
 
-The agent chat is a scrollable message history with user messages on the right, assistant responses on the left, and tool calls in between.
+The agent chat is a scrollable message history with user messages on the right, assistant responses on the left, just like a normal chatbot.
 
 ---
 
@@ -14,12 +14,14 @@ The agent chat is a scrollable message history with user messages on the right, 
 Hover over any message to reveal action buttons:
 
 **User messages:**
+
 - **Copy** — copy text to clipboard
-- **Edit** — open inline editor, save to re-run from that point (creates a branch)
+- **Edit** — edit a prior message you sent, save to re-run from that point
 
 **Assistant messages:**
+
 - **Copy** — copy text to clipboard
-- **Regenerate** — re-send the preceding user message for a fresh response (creates a branch)
+- **Regenerate** — regenerate the agent's response
 - **Branch chat** — fork the conversation into a new agent card on the dashboard
 
 ---
@@ -30,20 +32,10 @@ Editing a user message or regenerating a response creates a **branch** — a new
 
 ### Navigating branches
 
-When a message has multiple variants, a **`◀ 1/3 ▶`** navigator appears on hover. Click the arrows to switch between branches at that fork point. The entire conversation below updates to reflect the selected branch.
-
-### How it works internally
-
-Each branch tracks its parent and fork point. The chat view stitches together the correct segments so you always see a coherent conversation from top to bottom. Nothing is ever deleted — you can always navigate back.
-
----
-
-## Streaming
-
-Assistant responses stream in token-by-token via WebSocket. The chat auto-scrolls as new content arrives (unless you've scrolled up to read history, in which case a **scroll-to-bottom** button appears).
+When a message has multiple variants, a **`◀ 1/3 ▶`** navigator appears on hover. Click the arrows to switch between branches at that fork point. The entire conversation below updates to reflect the selected branch. Nothing is ever deleted — you can always navigate back.
 
 ---
 
 ## Resume
 
-If an agent is stopped mid-task, a **Resume** button appears. Clicking it sends a hidden prompt asking the agent to continue where it left off.
+If an agent is stopped mid-task, a **Resume** button appears. Clicking it allows an agent to continue where it left off.
