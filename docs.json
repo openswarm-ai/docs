@@ -50,9 +50,7 @@
             "pages": [
               "approvals",
               "branching",
-              "chat-input",
-              "element-selection",
-              "messages"
+              "chat-input"
             ]
           },
           {

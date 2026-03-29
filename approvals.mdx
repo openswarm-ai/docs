@@ -1,83 +1,103 @@
 ---
-title: "Approvals"
-description: "Reviewing and approving tool calls before the agent executes them."
+title: "Overview"
+description: "What an OpenSwarm agent is and what it can do."
 ---
 
-When an agent wants to use a tool that requires your permission, it pauses and shows an **approval request**. You review what the agent is about to do, then approve or deny it.
+An **agent** in OpenSwarm is a Claude-powered AI that can do anything you can do on your computer — read and write files, run shell commands, search the web, control a browser, send emails, manage your calendar — and handle long-running, multi-step tasks autonomously.
 
----
-
-## How approvals work
-
-Tool call permissions are configured per-tool in the [Tools](/tools) section. When a tool is set to **"Ask"** (rather than auto-allow or deny), every call to that tool is paused for your review.
-
-The agent's status changes to **`waiting_approval`** (amber dot) while it waits. It will not proceed until you respond.
+Think of each agent as a teammate you can brief on a task and let loose, while you watch it work in real time.
 
 ---
 
-## The approval card
+## What makes an agent different from a chatbot
 
-Each pending tool call appears as an **approval card** in the agent chat. The card shows:
+A regular chatbot takes a prompt and returns text. An OpenSwarm agent takes a prompt and **acts on it** — it plans, uses tools, reads results, adapts, and keeps going until the job is done or it needs your input.
 
-- **Tool icon and name** — e.g., a terminal icon for Bash, a document icon for Read/Write
-- **Integration badge** — for MCP tools, a branded badge (e.g., Google Workspace, X/Twitter, Reddit) with the action name
-- **Tool preview** — a human-readable summary of what the tool will do:
+Agents can:
+- **Run shell commands** to install dependencies, run tests, start servers
+- **Read and write code** across your entire project
+- **Browse the web** via a real browser — navigating, clicking, filling forms
+- **Use MCP integrations** — Gmail, Google Calendar, Drive, Sheets, X/Twitter, Reddit, and any custom MCP server you connect
+- **Spawn sub-agents** to parallelize work or delegate specialized tasks
+- **Generate interactive apps** (Views) that render live on the dashboard
 
-| Tool | Preview shows |
+All of this happens locally on your machine. No cloud relay, no third-party backend.
+
+---
+
+## Agents in the context of OpenSwarm
+
+OpenSwarm isn't about running one agent — it's about running **many at once**.
+
+Each agent lives as a card on the [dashboard canvas](/dashboard/overview). You can have 10+ agents working simultaneously, each in its own git worktree so they never conflict. The dashboard gives you a bird's-eye view of everything that's happening.
+
+### The swarm model
+
+1. You launch an agent from the toolbar and give it a task
+2. That agent can **spawn sub-agents** (via the `Agent` tool) — new cards appear on the canvas automatically
+3. Sub-agents can spawn **browser agents** that control browser cards visually
+4. Agents can **talk to each other** via `InvokeAgent` — querying another agent's full conversation context
+5. All tool approvals from all agents surface in one place — approve individually or batch with **Shift+A** / **Shift+D**
+
+### Git worktree isolation
+
+Every agent operates in its own git worktree and branch. This means five agents can edit five different files (or even the same file) in parallel without merge conflicts. When they're done, you review and merge on your terms.
+
+---
+
+## Agent lifecycle
+
+| Status | Meaning |
 |---|---|
-| **Bash** | The shell command (in a code block), plus the description if provided |
-| **Read** | The file path |
-| **Write / Edit** | The file path and a preview of the content being written |
-| **Grep / Glob** | The search pattern and directory |
-| **MCP tools** | A smart summary (e.g., email recipient + subject, calendar event name, search query) |
+| **Draft** | Created but no message sent yet |
+| **Running** | Actively processing — reading files, running commands, calling tools |
+| **Waiting for approval** | Paused on a tool call that needs your permission |
+| **Completed** | Finished its task |
+| **Stopped** | You manually stopped it (can be resumed) |
+| **Error** | Something went wrong |
 
 ---
 
-## Approving a tool call
+## Modes
 
-Click **Approve** (checkmark) to let the agent proceed with the tool call as-is.
+Agents run in a **mode** that controls their behavior — which tools are available, what system prompt they use, and how they approach tasks. OpenSwarm ships with built-in modes:
 
-### Editing inputs before approving
+- **Agent** — Full access to all tools. The default general-purpose mode.
+- **Ask** — Conversational only, no tool use. For quick questions.
+- **Plan** — Thinks through a plan before acting. Read-only tools only.
+- **App Builder** — Specialized for generating interactive Views.
+- **Skill Builder** — Specialized for creating reusable skills.
 
-For some tool calls, you can **modify the inputs** before approving. An **Edit inputs** toggle expands an input editor showing the raw tool input as JSON. Make your changes, then click Approve — the agent executes with your modified inputs.
-
----
-
-## Denying a tool call
-
-Click **Deny** (X) to block the tool call. An optional **message field** appears — you can type a reason or instruction for the agent (e.g., "use a different path" or "don't do this"). The agent receives the denial and your message and decides how to proceed.
+You can also create **custom modes** with your own system prompts and tool restrictions. Switch modes at any time from the [chat input](/agent/chat-input).
 
 ---
 
-## Multiple pending approvals
+## Models
 
-If an agent makes several tool calls in the same turn, each one gets its own card. They are shown in sequence. You approve or deny each independently.
+Each agent can use a different Claude model:
 
----
-
-## Batch approvals
-
-You can approve or deny all pending tool calls across **all agents on the dashboard** at once using keyboard shortcuts:
-
-| Shortcut | Action |
+| Model | Best for |
 |---|---|
-| **Shift+A** | Approve all pending tool calls |
-| **Shift+D** | Deny all pending tool calls |
+| **Sonnet 4.6** | Fast, capable, good default for most tasks |
+| **Opus 4.6** | Most capable, best for complex reasoning and long-horizon tasks |
+| **Haiku 3.5** | Fastest and cheapest, good for simple tasks |
 
-The **BatchApprovalBar** appears at the top of the dashboard when any agent is waiting, showing a count of pending approvals and the same bulk Approve / Deny buttons.
+You can switch models mid-conversation — the new model takes effect on the next message.
 
 ---
 
-## Auto-approval
+## Tool approvals
 
-Tools can be set to **Always allow** in the Tools settings, which skips the approval step entirely for that tool. Conversely, **Always deny** blocks a tool unconditionally without ever asking.
+When an agent wants to use a tool, it may need your permission depending on how that tool is configured:
 
-The three modes per tool are:
+- **Allow** — runs automatically, no approval needed
+- **Ask** — pauses and shows you exactly what it's about to do (the command, the file, the API call) so you can approve or deny
+- **Deny** — blocked entirely
 
-| Permission | Behavior |
-|---|---|
-| **Allow** | Executes automatically, no approval needed |
-| **Ask** | Pauses and waits for your approval |
-| **Deny** | Blocked immediately, agent is informed |
+You can approve or deny individually, or use **Shift+A** / **Shift+D** to batch-approve/deny all pending requests across every agent on the dashboard.
 
+---
 
+## Cost tracking
+
+Every agent session tracks token usage and cost in real time. A context window ring in the chat input shows how much of the 200K context window has been consumed.
