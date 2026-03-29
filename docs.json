@@ -69,9 +69,18 @@
           {
             "group": "Customization",
             "pages": [
-              "essentials/settings",
               "essentials/navigation",
-              "essentials/modes"
+              "essentials/modes",
+              {
+                "group": "Skills",
+                "pages": [
+                  "overview",
+                  "built-in-skills",
+                  "adding-skills",
+                  "custom-skills",
+                  "skill-builder"
+                ]
+              }
             ]
           },
           {
