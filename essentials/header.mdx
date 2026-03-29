@@ -25,15 +25,31 @@ If the dashboard has any cards on it, clicking the name pill opens a **dropdown 
 | **Views** | All embedded view cards, by output name |
 | **Browsers** | All browser cards, with the current tab title and URL |
 
-### Status dots (agent entries)
+### Status dots (for agent entries only)
 
-| Color | Meaning |
-|---|---|
-| 🟢 Green | Running |
-| 🟡 Amber | Waiting for approval |
-| ⚫ Slate | Completed or Stopped |
-| 🔴 Red | Error |
-| 🟣 Indigo | Draft |
+Each agent entry in the navigator also has a status indicator whose color reflects that agent's current status:
+
+<table>
+  <tbody>
+    <tr>
+      <td><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', backgroundColor: '#22c55e', verticalAlign: 'middle' }} /></td>
+      <td>Agent is actively executing</td>
+    </tr>
+    <tr>
+      <td><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', backgroundColor: '#f59e0b', verticalAlign: 'middle' }} /></td>
+      <td>Paused — waiting for a tool call to be approved</td>
+    </tr>
+    <tr>
+      <td><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', backgroundColor: '#94a3b8', verticalAlign: 'middle' }} /></td>
+      <td>Finished or manually stopped</td>
+    </tr>
+    <tr>
+      <td><span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', backgroundColor: '#ef4444', verticalAlign: 'middle' }} /></td>
+      <td>Terminated with an error</td>
+    </tr>
+  </tbody>
+</table>
+
 
 ### Jumping to a card
 
@@ -45,17 +61,3 @@ Clicking any item in the dropdown **focuses** the canvas on that card:
 ### Closing the dropdown
 
 Click anywhere outside the dropdown panel to close it.
-
----
-
-## Keyboard shortcuts reference
-
-The header itself doesn't have keyboard shortcuts, but the canvas shortcuts below work from the dashboard view:
-
-| Key | Action |
-|---|---|
-| **d** | Go to Dashboard (from any page) |
-| **1–9** | Open agent by position |
-| **?** | Show keyboard shortcuts help overlay |
-| **Shift+A** | Approve all pending tool calls |
-| **Shift+D** | Deny all pending tool calls |
