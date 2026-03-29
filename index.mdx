@@ -95,22 +95,6 @@ This creates a fundamentally different kind of workflow: one where AI amplifies 
 
 ---
 
-## Isolation by Default
-
-When OpenSwarm runs an agent, it doesn't just spin up a thread. It creates a **dedicated Git worktree** — an isolated copy of your codebase, scoped entirely to that agent's task.
-
-This means:
-
-- Agents working in parallel never step on each other's files
-- Every agent's changes are traceable, reviewable, and reversible
-- You can run ten agents simultaneously without any of them corrupting shared state
-
-When the work is done, changes surface as clean diffs — ready for your review, ready to merge, or ready to discard. Nothing sneaks into your codebase. Nothing happens behind the scenes.
-
-Isolation isn't a constraint. It's what makes true parallelism safe.
-
----
-
 ## The Knowledge Flywheel
 
 As you work with OpenSwarm, you're not just completing tasks — you're building a library of reusable intelligence.
@@ -135,17 +119,19 @@ This is the flywheel. And it compounds.
 
 ---
 
-## The Swarm Thesis
+## We Practice What We Preach
 
-We believe the next era of AI isn't about building a single model that knows everything.
+We don't demo OpenSwarm. We live in it.
 
-It's about building systems where many models — each excellent at something specific — work together under coherent human direction.
+Every day, the OpenSwarm team opens a single canvas and full-screens it. Not as a product test. Not as a side workflow. As our entire operating system. It's where strategy gets set, work gets executed, and decisions get made.
 
-> "The future of AI is not artificial general intelligence. It's artificial general orchestration."
+The landing page you saw before arriving here? Built with OpenSwarm — agents handling copy, layout, and iteration, with a human steering direction and making the final calls.
 
-The question was never _can AI be smarter than a human?_ The question is _can AI coordinate as well as a team of humans?_ That's the problem worth solving. That's the one that unlocks real leverage.
+This documentation? Same thing. A swarm drafted it, structured it, and kept it consistent across every page. The human in the loop shaped the voice, approved the sections, and decided what mattered.
 
-OpenSwarm is our answer.
+OpenSwarm itself — the product, the codebase, the roadmap — is developed with OpenSwarm. Agents running in isolated worktrees, proposing changes, surfacing diffs for review. We don't merge anything the team hasn't approved. But we rarely write from scratch.
+
+We built this because we needed it. And we keep building it the same way.
 
 ---
 
