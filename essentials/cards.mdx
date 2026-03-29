@@ -22,14 +22,17 @@ An agent card's header dot shows the current status:
     <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#E9F1DC', color: '#265B19', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>running</span>
     <span style={{ fontSize: '0.9rem' }}>Agent is actively executing</span>
   </div>
+
   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
     <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#F6EEDF', color: '#805C1F', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>waiting approval</span>
     <span style={{ fontSize: '0.9rem' }}>Paused, awaiting your sign-off</span>
   </div>
+
   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
     <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#F5F4ED', color: '#73726C', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>completed</span>
     <span style={{ fontSize: '0.9rem' }}>Finished or manually stopped</span>
   </div>
+
   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
     <span style={{ display: 'inline-flex', alignItems: 'center', height: '22px', padding: '0 8px', borderRadius: '16px', backgroundColor: '#FEE2E2', color: '#B53333', fontWeight: 600, fontSize: '0.7rem', lineHeight: 1 }}>error</span>
     <span style={{ fontSize: '0.9rem' }}>Something went wrong</span>
@@ -38,15 +41,15 @@ An agent card's header dot shows the current status:
 
 ### Collapsed vs. expanded
 
-Cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to **expand** it into a full chat view.
+By default, agent cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to **expand/collapse** it.
 
-In expanded mode you can:
+Expand an agent card to:
+
 - Read the full message history
 - Send follow-up messages
-- Approve or deny pending tool calls
-- View branch history
+- Edit, copy, and branch chats
 
-Toggle between states by clicking the expand/collapse handle on the card header.
+You can set the  **Default agent spawn state in dashboard** in Settings, this determines if a new agent card is expanded or collapsed.
 
 ### Resizing
 
@@ -54,40 +57,34 @@ Drag any edge or corner handle to resize the card. Minimum size is enforced so t
 
 ### Dragging
 
-Grab the **drag handle** (the grip icon in the card header) to move the card freely on the canvas.
+Grab anywhere in an agent card's header to move the card freely on the canvas.
 
 ### Sub-agent cards
 
-When an agent spawns sub-agents (e.g. via the `invoke_agent` tool), child cards are automatically placed near the parent card on the canvas. This behavior is controlled by the **Auto-reveal sub-agents** setting.
+When an agent spawns sub-agents, child cards are automatically placed near the parent card and visually linked so you can see what's going on. If you would rather have sub-agents remain hidden by default, you can set this via the **Auto-reveal sub-agents** setting.
 
 ### Approval bar
 
-If an agent is waiting for tool-call approval, the card shows an inline **Approval Bar** with Approve / Deny buttons. You can also bulk-approve or bulk-deny all pending agents with **Shift+A** / **Shift+D**.
-
-### Right-click / card menu
-
-Right-clicking a card or using the card's menu gives access to:
-- Duplicate
-- Close
+If an agent is waiting for tool-call approval, the card shows an inline **Approval Bar** with Approve / Deny buttons. This is always visible regardless of if an agent card is expanded or collapsed.
 
 ---
 
-## View Cards
+## App Cards
 
-View cards embed a live **app output** — an interactive UI artifact built by an agent — directly on the canvas.
+App cards embed a live **app** — an interactive, full-stack, applications built by agents — directly on the canvas.
 
-### Adding a view
+### Opening an app
 
-Open the toolbar → click **Add View** (⌘M) → search and select an output from the picker. The view is placed as a new card on the canvas.
+Open the toolbar → click **Add App** (⌘M) → search and select an output from the picker. The app is placed as a new card on the canvas.
 
-### Interacting with a view
+### Interacting with an app
 
-The card renders the view in an iframe. You can interact with it as a normal UI — click buttons, fill forms, scroll, etc.
+You can interact with an app like any normal website — click buttons, fill forms, scroll, etc.
 
 The header shows:
+
 - The view's name and icon
 - A **Refresh** button to reload the iframe
-- A **Run** (⚡) button to re-execute the output with updated inputs (if the output has an input schema)
 - A **Close** button
 
 ### Resizing
@@ -98,16 +95,17 @@ Drag any edge or corner handle to resize. Minimum card size: 320 × 200 px.
 
 ## Browser Cards
 
-Browser cards are full in-app web browsers embedded on the canvas. They support manual browsing and can also be driven autonomously by a **browser agent**.
+Browser cards are full in-app web browsers embedded on the canvas. They support manual browsing and can also be driven autonomously by an agent.
 
-### Adding a browser
+### Open a new browser
 
 Click **Browser** in the toolbar (⌘N). The card opens to your configured homepage.
 
 ### Tabs
 
 Browser cards support multiple tabs:
-- Click **+** in the tab bar to open a new tab.
+
+- Click **\+** in the tab bar to open a new tab.
 - Click any tab to switch to it.
 - Drag tabs to reorder them.
 - Click **✕** on a tab to close it.
@@ -115,25 +113,25 @@ Browser cards support multiple tabs:
 ### Navigation
 
 The card has a standard browser address bar:
+
 - Type a URL or search query and press Enter.
 - Bare search terms are sent to Google automatically.
 - Back (◀), Forward (▶), and Refresh (↺) buttons work as expected.
-- HTTPS sites show a lock icon.
 
 ### Browser agent overlay
 
-When a browser agent is actively controlling the card, an **overlay** appears on top of the card showing what the agent is doing in real time. Once the agent finishes, the overlay fades out.
+When an agent is actively controlling the card, an **overlay** appears on top of the card showing what the agent is doing in real time. Once the agent finishes, the overlay fades out.
 
 ### Resizing
 
-Drag any edge or corner handle to resize. Minimum card size: 400 × 300 px.
+Drag any edge or corner handle to resize.
 
-### Using a browser as agent context
+### Referencing a browser within an agent
 
-When composing a new agent prompt in the toolbar, you can **attach browser cards** as context. The agent will have access to the current page content of the selected browsers.
+When sending a message to an agent, enable "select mode" and select a browser on your canvas. When you send the message, this agent will now be able to both access the context of the browser and functionally control the browser.
 
 ---
 
-## Card layering (z-order)
+## Card layering
 
-Cards can overlap. Clicking or interacting with a card automatically brings it to the front. You can also programmatically bring a card to front via selection operations.
+Cards can overlap. Clicking or interacting with a card automatically brings it to the front.
