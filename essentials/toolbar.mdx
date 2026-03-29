@@ -1,0 +1,66 @@
+---
+title: "Toolbar"
+description: "The floating action bar at the bottom of the dashboard canvas."
+---
+
+The **Toolbar** is a floating pill-shaped bar anchored at the bottom of the canvas. It's the primary control surface for spawning agents and adding cards to the dashboard.
+
+<video src="/videos/MultiAgentDemo.mp4" autoPlay muted loop playsInline style={{ borderRadius: "12px", width: "100%" }} />
+
+## Toolbar buttons
+
+### \+ New Agent
+
+<kbd>Configurable shortcut</kbd> (default: **⌘ L**)
+
+Opens the **Chat Input** inline inside the toolbar. Type your prompt and press Enter to launch a new agent on the canvas.
+
+When the input is open:
+
+- The toolbar expands to show the full [Chat Input](/agent-chat/chat-input) component, including mode and model selectors.
+- Press **Escape** or click anywhere outside to dismiss without sending.
+- You can attach context, images, skills, or target specific browser cards before sending.
+
+If **Auto-select mode on new agent** is enabled in Settings, element selection mode activates automatically when you open the input — letting you click any UI element on the canvas to attach it as context.
+
+---
+
+### Add App <kbd>⌘M</kbd>
+
+Opens an **App Picker** panel inside the toolbar (480px wide). This lists all apps that have been created by agents.
+
+- Apps are shown with their **thumbnail**, name, and description.
+- Use the search box to filter by name or description.
+- Click any app to embed it as a [App Card](/dashboard/cards#view-cards) on the canvas.
+
+If no apps exist yet, the panel shows _"No apps created yet"_.
+
+---
+
+### Browser <kbd>⌘N</kbd>
+
+Adds a new **Browser Card** to the canvas, opened to your configured homepage (set in Settings → Browser Homepage, default is www.google.com).
+
+Browser cards are full in-app browsers that can be navigated manually or driven by an agent. See [Browser Cards](/dashboard/cards#browser-cards).
+
+---
+
+### History <kbd>⌘O</kbd>
+
+Opens a **History Panel** inside the toolbar, showing past agent sessions from this dashboard.
+
+- Sessions are listed with their name and relative timestamp (e.g. _"3h ago"_).
+- Use the search box to filter by session name.
+- The list is paginated — scroll to the bottom to load more.
+- Click any session to **resume** it, which re-opens the agent and its chat history on the canvas.
+
+---
+
+## Dismiss behavior
+
+The toolbar input/panel can be dismissed by:
+
+- Pressing **Escape**
+- Clicking anywhere outside the toolbar on the canvas
+
+When you dismiss the input panel, any in-progress element selections attached to the toolbar are also cleared.

@@ -49,6 +49,8 @@
             "group": "Workspaces",
             "pages": [
               "essentials/overview",
+              "essentials/toolbar",
+              "essentials/cards",
               "essentials/markdown",
               "essentials/code"
             ]

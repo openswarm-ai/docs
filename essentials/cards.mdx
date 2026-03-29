@@ -1,0 +1,137 @@
+---
+title: "Cards"
+description: "The three card types that live on the dashboard canvas."
+---
+
+Every item on the dashboard canvas is a **card**. Cards can be freely moved, resized, and layered. There are three card types:
+
+---
+
+## Agent Cards
+
+Agent cards are live chat sessions with an AI agent. Each card corresponds to one conversation.
+
+### States
+
+An agent card's header dot shows the current status:
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '4px' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <span style={{ flexShrink: 0, width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#22c55e', boxShadow: '0 0 6px #22c55e88', display: 'inline-block' }} />
+    <span>Running</span>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <span style={{ flexShrink: 0, width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b', boxShadow: '0 0 6px #f59e0b88', display: 'inline-block' }} />
+    <span>Waiting for approval</span>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <span style={{ flexShrink: 0, width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#94a3b8', display: 'inline-block' }} />
+    <span>Completed / Stopped</span>
+  </div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <span style={{ flexShrink: 0, width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', boxShadow: '0 0 6px #ef444488', display: 'inline-block' }} />
+    <span>Error</span>
+  </div>
+</div>
+
+### Collapsed vs. expanded
+
+Cards start **collapsed** — showing a compact summary bar with the agent name, status, and the most recent tool call or message. Click the card to **expand** it into a full chat view.
+
+In expanded mode you can:
+- Read the full message history
+- Send follow-up messages
+- Approve or deny pending tool calls
+- View branch history
+
+Toggle between states by clicking the expand/collapse handle on the card header.
+
+### Resizing
+
+Drag any edge or corner handle to resize the card. Minimum size is enforced so the card always remains usable.
+
+### Dragging
+
+Grab the **drag handle** (the grip icon in the card header) to move the card freely on the canvas.
+
+### Sub-agent cards
+
+When an agent spawns sub-agents (e.g. via the `invoke_agent` tool), child cards are automatically placed near the parent card on the canvas. This behavior is controlled by the **Auto-reveal sub-agents** setting.
+
+### Approval bar
+
+If an agent is waiting for tool-call approval, the card shows an inline **Approval Bar** with Approve / Deny buttons. You can also bulk-approve or bulk-deny all pending agents with **Shift+A** / **Shift+D**.
+
+### Right-click / card menu
+
+Right-clicking a card or using the card's menu gives access to:
+- Duplicate
+- Close
+
+---
+
+## View Cards
+
+View cards embed a live **app output** — an interactive UI artifact built by an agent — directly on the canvas.
+
+### Adding a view
+
+Open the toolbar → click **Add View** (⌘M) → search and select an output from the picker. The view is placed as a new card on the canvas.
+
+### Interacting with a view
+
+The card renders the view in an iframe. You can interact with it as a normal UI — click buttons, fill forms, scroll, etc.
+
+The header shows:
+- The view's name and icon
+- A **Refresh** button to reload the iframe
+- A **Run** (⚡) button to re-execute the output with updated inputs (if the output has an input schema)
+- A **Close** button
+
+### Resizing
+
+Drag any edge or corner handle to resize. Minimum card size: 320 × 200 px.
+
+---
+
+## Browser Cards
+
+Browser cards are full in-app web browsers embedded on the canvas. They support manual browsing and can also be driven autonomously by a **browser agent**.
+
+### Adding a browser
+
+Click **Browser** in the toolbar (⌘N). The card opens to your configured homepage.
+
+### Tabs
+
+Browser cards support multiple tabs:
+- Click **+** in the tab bar to open a new tab.
+- Click any tab to switch to it.
+- Drag tabs to reorder them.
+- Click **✕** on a tab to close it.
+
+### Navigation
+
+The card has a standard browser address bar:
+- Type a URL or search query and press Enter.
+- Bare search terms are sent to Google automatically.
+- Back (◀), Forward (▶), and Refresh (↺) buttons work as expected.
+- HTTPS sites show a lock icon.
+
+### Browser agent overlay
+
+When a browser agent is actively controlling the card, an **overlay** appears on top of the card showing what the agent is doing in real time. Once the agent finishes, the overlay fades out.
+
+### Resizing
+
+Drag any edge or corner handle to resize. Minimum card size: 400 × 300 px.
+
+### Using a browser as agent context
+
+When composing a new agent prompt in the toolbar, you can **attach browser cards** as context. The agent will have access to the current page content of the selected browsers.
+
+---
+
+## Card layering (z-order)
+
+Cards can overlap. Clicking or interacting with a card automatically brings it to the front. You can also programmatically bring a card to front via selection operations.
