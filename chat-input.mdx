@@ -12,65 +12,69 @@ The **Chat Input** is the editor at the bottom of every agent card. It's where y
 ## Basics
 
 - **Enter** — send message
-- **Shift+Enter** — new line
-- While the agent is busy, new messages are **queued** and dispatched automatically when it finishes
+- **Shift\+Enter** — new line
+- If you send a new message while the agent is running, your message gets **queued** and dispatched automatically when the agent finishes.
+  - You can queue multiple messages.
+  - Queued messages can be edited, deleted, or re-ordered prior to them getting sent to the agent.
 
 ---
 
-## `/` Slash commands
+## `/` Slash Commands
 
-Type `/` at the start of a word to open the command picker:
+Type `/` within the chat input to open the command picker:
 
 - **Templates** — insert a reusable prompt template (with optional fill-in fields)
-- **Skills** — attach a skill as an inline pill. The skill's content is injected into the prompt on send. You can attach multiple.
-- **Modes** — switch the agent's mode without leaving the input
+- **Skills** — manually attach a skill, forcing an agent to use it.
+- **Modes** — switch the agent's mode (same as manually selecting the mode in the chat input via the dropdown)
 
 ---
 
-## `@` Context commands
+## `@` Context Commands
 
 Type `@` at the start of a word to open the context picker:
 
 - **`@file`** — browse and attach a local file or folder as context
 - **`@web`** — force the agent to use WebSearch/WebFetch for this message
-- **MCP integrations** — force specific tool groups (e.g. Google Workspace, X/Twitter, Reddit). These appear as branded pills.
+- **Integrations** — force specific tools (e.g. Google Workspace, X/Twitter, Reddit).
 
 ---
 
 ## Attachments
 
-### Images
-Drag and drop, paste from clipboard, or use the attachment button. Thumbnails appear above the input.
+### Images & Files
 
-### Files
-Drag and drop non-image files — they're uploaded and attached as context paths.
+Drag and drop, paste from clipboard, or use the attachment button. Thumbnails appear above the input.
 
 ---
 
-## Element selection
+## Element Selection
 
 Click the **select icon** in the input toolbar to enter **element selection mode**. This lets you click anything on the canvas to attach it as context:
 
-- **Agent cards** — attaches the agent's session ID and a hint to use `InvokeAgent`
-- **Browser cards** — attaches the `browser_id` and current URL
-- **View cards** — attaches the output name and ID
-- **Messages, tool calls** — attaches the content and metadata
-- **DOM elements inside views** — attaches the selector, HTML, styles, and a screenshot
+- **Other Agents** — allows the current agent to access the context of a prior agent and re-deploy a copy of this prior agent as it's own employee.
+- **Browsers** — allows the current agent to access the context of and control a browser.
+- **Apps** — allows the current agent to access the context of and control a browser.
 
-Selected elements appear as chips above the input. When you send, they're appended to your prompt as structured metadata.
+Selected elements appear as chips above the input.
 
 <Tip>
-  If you copy dashboard cards with **⌘C** and paste into the input with **⌘V**, they're converted into selection context automatically.
+  If you copy anything in a workspace with **⌘C** and paste into the input with **⌘V**, they're converted into selection context automatically.
 </Tip>
 
 ---
 
-## Mode & model selectors
+## Mode & Model Selectors
 
 Two pill buttons at the bottom of the input let you switch the **mode** and **model** for this session. See [Agents overview](/agent/overview) for the available options.
 
 ---
 
-## Context window
+## Context Window
 
 A small ring next to the selectors shows context usage. Hover for the exact count (e.g. `45.2% · 90.4K / 200K`).
+
+---
+
+## Stopping / Resuming Agents
+
+While an agent is running, the send button in the chat input turns into a stop button. When clicked, this stops an agent and of it's any sub-agents. If an agent has been stopped, you will also see a resume button in the chat history that enables you to let an agent continue where it left off.
