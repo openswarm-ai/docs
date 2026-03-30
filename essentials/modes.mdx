@@ -122,31 +122,31 @@ Visual customization for the mode card and mode selector. Pick from the availabl
 
 Your custom mode will immediately appear in the mode selector when starting or switching agent modes.
 
-### Example: Code Review Mode
+### Example: Research Mode
 
-A mode that restricts the agent to read-only actions and gives it a focused review prompt:
+A mode that restricts the agent to reading and searching — no file edits or shell commands. Great for when you want answers without side effects:
 
 | Field | Value |
 |---|---|
-| **Name** | Code Reviewer |
-| **Description** | Reviews code for bugs, security issues, and style. |
-| **System Prompt** | `You are a senior code reviewer. Analyze code for correctness, security vulnerabilities, performance issues, and style. Report findings in a structured format with severity levels. Do not make any edits.` |
+| **Name** | Research |
+| **Description** | Searches the web, reads files, and answers questions. No edits or commands. |
+| **System Prompt** | `You are a research assistant. Find accurate, well-sourced answers to questions. Summarize findings clearly with key takeaways. Do not make any file edits or run commands.` |
 | **Actions** | `Read`, `Glob`, `Grep`, `AskUserQuestion` |
 | **Default Next Mode** | None |
 | **Default Folder** | Not set |
 
-### Example: Fullstack Dev Mode
+### Example: Email Drafter Mode
 
-A mode that gives the agent access to everything plus your MCP integrations, scoped to a project directory:
+A mode that gives the agent access to Gmail for composing drafts, scoped to a specific folder for context:
 
 | Field | Value |
 |---|---|
-| **Name** | Fullstack Dev |
-| **Description** | Full-stack development with all tools and integrations. |
-| **System Prompt** | `You are a senior full-stack engineer. Follow existing code conventions. Write tests for new features. Run the test suite before considering a task complete.` |
-| **Actions** | All (unrestricted) |
+| **Name** | Email Drafter |
+| **Description** | Drafts emails based on notes and context files. |
+| **System Prompt** | `You are a professional writing assistant. Read the user's notes and context, then draft clear, concise emails. Always save as a Gmail draft — never send directly. Match the user's tone and keep emails under 200 words unless asked otherwise.` |
+| **Actions** | `Read`, `Glob`, `Grep`, `AskUserQuestion`, `mcp:google-workspace` |
 | **Default Next Mode** | None |
-| **Default Folder** | `/Users/me/projects/my-app` |
+| **Default Folder** | `/Users/me/Documents/email-drafts` |
 
 ---
 

@@ -1,38 +1,192 @@
 ---
 title: "Using Apps"
-description: "Configure Claude Code for your documentation workflow"
-icon: "window"
+description: "How to run, manage, and interact with Apps from your library."
 ---
 
-Set up Claude Code to help you write and maintain your Mintlify documentation.
+Once an App is saved, it lives in your Apps library and can be launched at any time — with different inputs, from agents, or directly from the Apps page.
 
-## Prerequisites
+---
 
-- Active Claude subscription (Pro, Max, or API access)
+## The Apps library
 
-## Setup
+Navigate to **Apps** in the sidebar to see all your saved Apps. Each App is displayed as a card showing:
 
-<Steps>
-  <Step title="Install Claude Code">
-    ```bash
-    npm install -g @anthropic-ai/claude-code
-    ```
-  </Step>
-  <Step title="Install the Mintlify skill">
-    In your docs directory, run:
+- A **thumbnail** (auto-captured from the last preview)
+- The App's **name** and **description**
+- Action buttons on hover: **Run**, **Edit**, **Delete**
 
-    ```bash
-    npx skills add https://mintlify.com/docs
-    ```
+<Frame>
+  Apps are arranged in a responsive grid. The library loads instantly — no waiting for a server.
+</Frame>
 
-    This gives Claude Code Mintlify's component reference, writing standards, and workflow guidance.
-  </Step>
-  <Step title="Customize project instructions">
-    Edit `AGENTS.md` in your project root to add project-specific terminology, style preferences, and content boundaries.
-  </Step>
-  <Step title="Start writing with Claude Code">
-    ```bash
-    claude
-    ```
-  </Step>
-</Steps>
+---
+
+## Running an App
+
+There are two ways to run an App.
+
+### From the library
+
+1. Hover over an App card
+2. Click the **▶ Run** button (play icon)
+3. A dialog opens with two panels:
+   - **Input** — a form generated from the App's schema
+   - **Preview** — a live render of the App
+
+4. Fill in the input fields
+5. Click **Preview** (frontend only) or **Execute & Preview** (if the App has a Python backend)
+
+The preview updates with your input data. You can change inputs and re-run as many times as you want without closing the dialog.
+
+### From an agent
+
+Agents can reference and run Apps directly. Use the `RenderOutput` tool in agent chat to invoke an App by its ID and pass input data. This lets agents use Apps as interactive output formats — for example, an agent that researches a company can render the results in a dashboard App.
+
+---
+
+## The run dialog
+
+The run dialog has two panels side by side:
+
+### Input panel
+
+The input panel is a form auto-generated from the App's `schema.json`. It supports all field types:
+
+| Field type | Control |
+|---|---|
+| Text | Single-line or multiline text field |
+| Number / Integer | Numeric input |
+| Boolean | Toggle switch |
+| Enum | Dropdown select |
+| Array | List with **+ Add item** and remove buttons |
+| Object | Nested group of fields with a left border indent |
+
+Required fields are marked with an asterisk (`*`).
+
+### Preview panel
+
+The preview is a sandboxed iframe. It shows the live App with your current input values injected as `window.OUTPUT_INPUT`.
+
+If the App has a backend, clicking **Execute & Preview** runs the Python code first. The backend result is then passed to the frontend as `window.OUTPUT_BACKEND_RESULT` before the iframe renders.
+
+If there is a backend error, a red error message appears in the preview panel header.
+
+---
+
+## Editing an App
+
+To open the editor for an existing App:
+
+- Click anywhere on the App card, **or**
+- Hover and click the **Edit** (pencil) icon
+
+This opens the full [App Editor](/apps/creating-apps) where you can modify any file, update the schema, tweak the backend, or chat with an agent to make changes.
+
+---
+
+## Deleting an App
+
+To delete an App:
+
+1. Hover over the App card
+2. Click the **Delete** (trash) icon
+3. The App is removed immediately
+
+<Warning>
+Deletion is permanent. There is no undo. Make sure you don't need the App before deleting.
+</Warning>
+
+---
+
+## Input data injection
+
+When an App renders, OpenSwarm injects your input values into the browser context before any scripts run. Two globals are available:
+
+```js
+window.OUTPUT_INPUT
+// The input data from the run dialog form (matches your schema)
+
+window.OUTPUT_BACKEND_RESULT
+// The result returned by backend.py, or null if no backend
+```
+
+Your frontend code reads from these to make the UI dynamic. For example:
+
+```js
+const { firstName, score, items } = window.OUTPUT_INPUT;
+const backendData = window.OUTPUT_BACKEND_RESULT;
+
+document.querySelector('#name').textContent = firstName;
+renderChart(backendData?.chartData ?? []);
+```
+
+---
+
+## Auto-run
+
+If an App has **auto-run** enabled, it can be triggered without manually filling in the form. Auto-run uses a saved prompt to instruct an agent to compute and populate the inputs automatically.
+
+To use auto-run on a saved App:
+
+1. Open the App in the editor
+2. Go to the **Auto-run** tab
+3. Click **Run** — the agent will compute the inputs and render the App
+
+This is especially useful for Apps that display live data (stock prices, weather, analytics) where you want fresh values every time.
+
+### Auto-run modes
+
+| Mode | Behavior |
+|---|---|
+| **Instant** | One-shot: the agent generates inputs in a single API call, then executes |
+| **Agent** | Full agent session: reasons about the task, can use tools, produces richer results |
+
+The **Agent** log panel shows every step the agent takes — tool calls, reasoning, results — in a collapsible timeline.
+
+---
+
+## The console
+
+When running an App with a backend, the **Console** tab in the editor shows execution details:
+
+| Section | Content |
+|---|---|
+| **Input Data** | The exact JSON sent to the backend |
+| **stdout** | Everything the Python script printed |
+| **stderr** | Warnings or non-fatal errors |
+| **Result** | The parsed JSON result returned to the frontend |
+| **Error** | Any fatal error that prevented execution |
+
+The console is useful for debugging — if the frontend isn't showing the data you expect, check here to see what the backend actually returned.
+
+---
+
+## Using Apps as agent outputs
+
+Agents can generate Apps as a form of structured, visual output. Instead of returning a wall of text, an agent can:
+
+1. Write an App that visualizes the data
+2. Save it to the Apps library
+3. Call `RenderOutput` to display it inline in the agent chat
+
+This turns agent responses into interactive interfaces — search results become a filterable table, analysis becomes a chart, a plan becomes a timeline.
+
+---
+
+## Sharing Apps
+
+Apps are stored locally on your OpenSwarm instance. To share an App with someone else:
+
+- Export the App's workspace files (`index.html`, `backend.py`, `schema.json`) and send them
+- The recipient can create a new App in their OpenSwarm instance and paste the files in
+
+Cloud sync and one-click App sharing are on the roadmap.
+
+---
+
+## Keyboard shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Cmd+S` | Save the current App (in editor) |
+| `Escape` | Close the run dialog |
