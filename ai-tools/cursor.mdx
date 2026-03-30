@@ -1,34 +1,180 @@
 ---
 title: "Creating Apps"
-description: "Configure Cursor for your documentation workflow"
-icon: "comment-code"
+description: "How to build, edit, and save Apps in OpenSwarm."
 ---
 
-Set up Cursor to help you write and maintain your Mintlify documentation.
+There are two ways to create an App: let an agent build it for you, or build it manually in the editor. Both paths end up in the same place — a saved App in your library.
 
-## Prerequisites
+---
 
-- Cursor editor installed
+## Method 1: Generate with an agent (recommended)
 
-## Setup
+The fastest way to create an App is to launch an agent in **App Builder** mode and describe what you want.
 
-<Steps>
-  <Step title="Open your docs directory in Cursor">
-    Open the root of your documentation repository where `docs.json` is located.
-  </Step>
-  <Step title="Install the Mintlify skill">
-    In the integrated terminal, run:
+1. Open the OpenSwarm dashboard
+2. Create a new agent card
+3. Switch to **App Builder** mode from the mode selector
+4. Describe your App — be as specific as you like:
+   > _"Build a mortgage calculator that takes loan amount, interest rate, and term in years. Show a monthly payment breakdown with a chart."_
+5. The agent writes the full App — HTML, CSS, JavaScript, Python backend, etc.
+6. The App is saved automatically to your library
 
-    ```bash
-    npx skills add https://mintlify.com/docs
-    ```
+You can iterate by continuing to chat with the agent: _"make the chart blue"_, _"add a dark mode toggle"_, _"add an amortization table below the chart"_.
 
-    This gives Cursor Mintlify's component reference, writing standards, and workflow guidance.
-  </Step>
-  <Step title="Customize project instructions">
-    Edit `AGENTS.md` in your project root to add project-specific terminology, style preferences, and content boundaries.
-  </Step>
-  <Step title="Start writing with Cursor">
-    Open a file and use Cursor's AI features to draft and edit documentation.
-  </Step>
-</Steps>
+<Tip>
+  You don't have to use App Builder mode. Any agent in any mode can generate App code — just ask it to make an App.
+</Tip>
+
+---
+
+## Method 2: Build manually in the editor
+
+Click **New app** on the Apps page to open the editor. The editor is a full development environment inside OpenSwarm.
+
+### Editor layout
+
+The editor has three main areas:
+
+| Area | Description |
+| --- | --- |
+| **Left sidebar** | File tree — all files that make up the App |
+| **Right panel** | Tabbed: Preview, Code, Test Input, Auto-run, Console |
+
+### The file tree
+
+Your App is a directory of files. The core files are:
+
+| File | Required | Purpose |
+| --- | --- | --- |
+| `index.html` | Yes | The frontend — HTML, CSS, and JavaScript |
+| `backend.py` | No | Python backend executed on demand |
+| `schema.json` | Yes | JSON Schema for input parameters |
+| `meta.json` | Auto | Name, description, icon metadata |
+| `SKILL.md` | Optional | Instructions for agents using this App as a skill |
+
+You can add any additional files (CSS, JS, JSON data files, etc.) from the file tree. Protected files (`index.html`, `schema.json`, `meta.json`, `SKILL.md`) cannot be deleted.
+
+### Writing the frontend
+
+The frontend is a standard HTML file. At runtime, OpenSwarm injects two global variables before your scripts run:
+
+```js
+window.OUTPUT_INPUT        // The input data filled in by the user (from schema.json)
+window.OUTPUT_BACKEND_RESULT  // The result from backend.py (if present), or null
+```
+
+Use these to make your UI dynamic:
+
+```html
+<script>
+  const data = window.OUTPUT_INPUT;
+  document.getElementById('name').textContent = data.name;
+</script>
+```
+
+You can use any CDN-hosted library:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdn.tailwindcss.com">
+```
+
+### Writing the backend
+
+`backend.py` is optional Python code that runs server-side when the App is executed. It receives the input data and can return any JSON-serializable result.
+
+```python
+import json, os
+
+# Input data is available as a JSON string in the INPUT env variable
+input_data = json.loads(os.environ.get("INPUT", "{}"))
+
+loan = input_data.get("loan_amount", 0)
+rate = input_data.get("annual_rate", 0) / 12 / 100
+term = input_data.get("term_months", 360)
+
+monthly = loan * rate / (1 - (1 + rate) ** -term) if rate else loan / term
+
+# Print JSON to stdout — this becomes window.OUTPUT_BACKEND_RESULT
+print(json.dumps({ "monthly_payment": round(monthly, 2) }))
+```
+
+The backend's stdout (parsed as JSON) becomes `window.OUTPUT_BACKEND_RESULT` in the frontend.
+
+### Defining the input schema
+
+`schema.json` is a [JSON Schema](https://json-schema.org/) object that defines the inputs your App accepts. OpenSwarm auto-generates a form from this when users run the App.
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Full name of the user",
+      "default": "Jane Smith"
+    },
+    "age": {
+      "type": "integer",
+      "description": "Age in years"
+    },
+    "plan": {
+      "type": "string",
+      "enum": ["starter", "pro", "enterprise"],
+      "default": "pro"
+    }
+  },
+  "required": ["name"]
+}
+```
+
+Supported types: `string`, `number`, `integer`, `boolean`, `array`, `object`. Use `enum` for dropdown selects.
+
+---
+
+## Using the AI assistant in the editor
+
+The editor has a built-in AI chat panel. Use it to:
+
+- Generate the initial App from a description
+- Ask for changes: _"add a download button"_, _"use a dark background"_
+- Debug errors in the console output
+- Add a backend: _"write a Python backend that fetches weather data"_
+
+The agent writes directly into your workspace files — you see the changes update in real time in the preview.
+
+---
+
+## Preview & test input
+
+The **Preview** tab shows a live render of your App inside a sandboxed iframe. It updates automatically as you edit code.
+
+Switch to the **Test Input** tab to fill in sample values for your schema fields. The preview re-renders with those values so you can see exactly what a user would experience.
+
+Use the **stub** feature (lightning bolt icon) to auto-fill all fields with realistic sample data — names, emails, URLs, dates — based on the field names in your schema.
+
+---
+
+## Auto-save
+
+The editor auto-saves your changes every few seconds. The save status indicator in the toolbar shows:
+
+| Status | Meaning |
+| --- | --- |
+| **Saved** | All changes persisted |
+| **Unsaved** | Changes pending |
+| **Saving** | Write in progress |
+
+You can also manually save at any time with the **Save** button (or `Cmd+S`).
+
+---
+
+## App metadata
+
+Give your App a clear **name** and **description** — these appear on the App card in the library and help agents understand what the App does when they use it as a skill.
+
+---
+
+## Saving and publishing
+
+Apps are saved locally to your OpenSwarm instance. After saving, the App appears in your library immediately and can be run from any agent or directly from the Apps page.
