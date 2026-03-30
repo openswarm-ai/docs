@@ -92,6 +92,7 @@
           {
             "group": "Apps",
             "pages": [
+              "ai-tools/a",
               "ai-tools/cursor",
               "ai-tools/claude-code"
             ]

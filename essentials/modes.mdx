@@ -1,4 +1,198 @@
 ---
 title: "Modes"
-icon: "sliders"
+description: "Control how agents behave with custom system prompts, action restrictions, working directories, and auto-switching."
 ---
+
+**Modes** define how an agent behaves during a session. A mode controls which actions the agent can use, what system prompt it receives, where it works on disk, and what mode it should switch to next. Every agent session runs in exactly one mode at a time.
+
+You can use the built-in modes as-is, customize them, or create entirely new ones.
+
+---
+
+## Built-in Modes
+
+OpenSwarm ships with five built-in modes:
+
+| Mode | Actions | Purpose |
+|---|---|---|
+| **Agent** | All | Full autonomous agent with read and write access to everything. The default. |
+| **Ask** | `Read`, `Glob`, `Grep`, `AskUserQuestion` | Answer questions about the codebase. Read-only — no edits or commands. |
+| **Plan** | `Read`, `Glob`, `Grep`, `AskUserQuestion` | Analyze a request and produce a step-by-step plan without executing it. Auto-switches to **Agent** when done. |
+| **App Builder** | All | Create and iterate on interactive [App](/apps/overview) artifacts. Operates in a dedicated workspace folder. |
+| **Skill Builder** | All | Create and iterate on reusable [Skills](/skills/overview). Operates in a dedicated workspace folder. |
+
+Built-in modes can be edited but not deleted. If you modify a built-in mode and want to undo your changes, use the **Reset to Default** button in the edit dialog.
+
+---
+
+## Mode Properties
+
+Every mode — built-in or custom — has the following configurable properties:
+
+### Name & Description
+
+The **name** is what appears in the mode selector in the chat input. The **description** is shown below the name in the mode card and helps you (and the agent) understand the mode's purpose.
+
+<Tip>
+  The description is for your reference only — it is _not_ injected into the agent's system prompt. Use the **System Prompt** field for instructions you want the agent to follow.
+</Tip>
+
+### System Prompt
+
+The system prompt is injected into every message the agent processes while in this mode. Use it to define the agent's role, constraints, output format, or any behavioral rules.
+
+```text
+You are a code reviewer. Analyze the code for bugs, security issues,
+and style problems. Do not make any edits — only report findings.
+```
+
+The system prompt editor supports two special syntaxes:
+
+- **`@` mentions** — Reference files, folders, or other context that should be attached to the prompt. Type `@` to browse.
+- **`/` commands** — Insert slash commands. Type `/` to browse available commands.
+
+<Info>
+  When a session starts, OpenSwarm composes the final system prompt by combining three layers (in order):
+  1. The **global default system prompt** from [Settings](/customization/settings)
+  2. The **mode system prompt** (this field)
+  3. The **session-level system prompt** (if one was provided when launching the agent)
+</Info>
+
+### Actions
+
+By default, a mode allows **all actions** — every built-in tool and every connected MCP integration. You can restrict this to a specific subset by enabling the **Restrict actions** toggle and selecting which actions are allowed.
+
+Actions are organized into two groups in the selector:
+
+<AccordionGroup>
+  <Accordion title="Built-in Actions">
+    The core tools from the Claude Agent SDK:
+    - `Read` — Read file contents
+    - `Edit` — Make targeted edits to files
+    - `Write` — Write entire files
+    - `Bash` — Run shell commands
+    - `Glob` — Search for files by pattern
+    - `Grep` — Search file contents
+    - `AskUserQuestion` — Ask the user a clarifying question
+  </Accordion>
+  <Accordion title="MCP Actions">
+    Any MCP server you've connected in the [Action Library](/customization/actions/overview) appears here as `mcp:<name>` (e.g., `mcp:google-workspace`, `mcp:reddit`). Selecting an MCP action makes the _entire_ server's tools available to the agent in this mode.
+  </Accordion>
+</AccordionGroup>
+
+<Warning>
+  Action restrictions are enforced at session launch. If a mode only allows `Read` and `Grep`, the agent physically cannot call `Bash` or `Write` — they are not loaded into the session. This is a hard constraint, not a prompt-based suggestion.
+</Warning>
+
+### Default Next Mode
+
+When set, the agent will automatically switch to the specified mode after completing its task. This enables mode chaining — for example, the built-in **Plan** mode sets its default next mode to **Agent**, so after planning, the agent transitions into execution mode.
+
+If no default next mode is set, the agent stays in the current mode.
+
+### Default Folder
+
+The working directory the agent starts in when using this mode. This overrides the global default folder from [Settings](/customization/settings).
+
+The resolution order for an agent's working directory is:
+
+1. **Session-level target directory** (if explicitly set when launching the agent)
+2. **Mode default folder** (this field)
+3. **Global default folder** (from Settings)
+4. **Home directory** (`~`)
+
+You can type a path directly or use the **Browse** button to pick a folder visually.
+
+<Note>
+  The **App Builder** and **Skill Builder** modes use their default folder as a _workspace root_ — each new session creates a subdirectory within it. This keeps each app/skill isolated in its own folder.
+</Note>
+
+### Icon & Color
+
+Visual customization for the mode card and mode selector. Pick from the available icon set and color palette to make modes easily distinguishable at a glance.
+
+---
+
+## Creating a Custom Mode
+
+1. Navigate to **Customization → Modes** in the sidebar
+2. Click **New Mode** in the top right
+3. Fill in the mode properties described above
+4. Click **Create Mode**
+
+Your custom mode will immediately appear in the mode selector when starting or switching agent modes.
+
+### Example: Code Review Mode
+
+A mode that restricts the agent to read-only actions and gives it a focused review prompt:
+
+| Field | Value |
+|---|---|
+| **Name** | Code Reviewer |
+| **Description** | Reviews code for bugs, security issues, and style. |
+| **System Prompt** | `You are a senior code reviewer. Analyze code for correctness, security vulnerabilities, performance issues, and style. Report findings in a structured format with severity levels. Do not make any edits.` |
+| **Actions** | `Read`, `Glob`, `Grep`, `AskUserQuestion` |
+| **Default Next Mode** | None |
+| **Default Folder** | Not set |
+
+### Example: Fullstack Dev Mode
+
+A mode that gives the agent access to everything plus your MCP integrations, scoped to a project directory:
+
+| Field | Value |
+|---|---|
+| **Name** | Fullstack Dev |
+| **Description** | Full-stack development with all tools and integrations. |
+| **System Prompt** | `You are a senior full-stack engineer. Follow existing code conventions. Write tests for new features. Run the test suite before considering a task complete.` |
+| **Actions** | All (unrestricted) |
+| **Default Next Mode** | None |
+| **Default Folder** | `/Users/me/projects/my-app` |
+
+---
+
+## Editing & Resetting Modes
+
+### Editing
+
+Click the **edit icon** on any mode card to open the edit dialog. All fields are editable, including on built-in modes.
+
+Changes take effect on **new sessions** — existing running agents keep the mode configuration they were launched with.
+
+### Resetting Built-in Modes
+
+If you've modified a built-in mode and want to restore it to its original configuration, open the edit dialog and click **Reset to Default** in the bottom left. This button only appears for built-in modes and is only enabled when the mode has diverged from its defaults.
+
+### Deleting
+
+Custom modes can be deleted by clicking the **delete icon** on the mode card. Built-in modes cannot be deleted.
+
+---
+
+## How Modes Are Applied
+
+When an agent session launches, OpenSwarm resolves the mode and applies it:
+
+<Steps>
+  <Step title="Resolve mode by ID">
+    Look up the mode definition from the modes store.
+  </Step>
+  <Step title="Load allowed actions">
+    If the mode restricts actions, only those tools are loaded. Otherwise all available tools are included.
+  </Step>
+  <Step title="Resolve working directory">
+    Determined by priority: session-level target directory → mode default folder → global default folder → `~`.
+  </Step>
+  <Step title="Compose system prompt">
+    The final prompt is assembled by concatenating the global default prompt, the mode prompt, and the session-level prompt (in that order).
+  </Step>
+  <Step title="Connect MCP servers">
+    MCP servers whose actions are in the allowed set are started and attached to the session.
+  </Step>
+  <Step title="Start Claude Agent SDK session">
+    The session begins with the resolved tools, prompt, and working directory.
+  </Step>
+</Steps>
+
+<Info>
+  The mode configuration is captured at launch time. Changing a mode's settings after an agent is already running will not affect that session — only new sessions will pick up the changes.
+</Info>

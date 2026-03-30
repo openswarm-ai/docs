@@ -1,0 +1,55 @@
+---
+title: "Overview"
+description: "Prompt interactive applications into existence — no deployment required."
+---
+
+**Apps** are interactive, AI-generated web applications that live inside OpenSwarm. Instead of paying for software or spending weeks building UIs, you describe what you want and an agent writes it for you — a live, runnable app appears in seconds.
+
+> "In the past, we used to have to pay for expensive applications. Now, you can prompt them into existence."
+
+---
+
+## What is an App?
+
+An App in OpenSwarm is a self-contained, reusable interface that:
+
+- Runs directly inside the OpenSwarm dashboard
+- Runs a **Python backend** for data processing, API calls, or computation
+
+Apps are built from files — at minimum an `index.html` for the frontend, and optionally a `backend.py` for server-side logic.
+
+---
+
+## What can Apps do?
+
+Apps are full web applications. Anything that runs in a browser can be an App:
+
+- **Data dashboards** — charts, tables, live stats
+- **Calculators and tools** — mortgage calculators, unit converters, ROI estimators
+- **Form UIs** — contact forms, intake flows, data entry interfaces
+- **Visualizations** — maps, graphs, timelines, org charts
+- **Utilities** — markdown renderers, JSON formatters, color pickers
+- **Mini-apps** — Pomodoro timers, kanban boards, invoice generators
+- **Games** — anything playable in a browser
+
+The frontend can use any JavaScript library that loads from a CDN (React, Chart.js, Tailwind, D3, etc.). No bundler required.
+
+---
+
+## The Apps library
+
+All your Apps live on the **Apps page** (`/apps`). Each App is shown as a card with:
+
+- A **thumbnail** (auto-captured from the last preview, or a default icon)
+- The App's **name** and **description**
+- Quick-action buttons to **run**, **edit**, or **delete**
+
+From the library you can launch any App instantly, without going back into the editor.
+
+---
+
+## How Apps relate to agents
+
+An app that has already been created can be used by an agent the same way a human uses the app. You can think of this like the Browser use agentic capabilities, but for a custom App.
+
+You can build Apps manually in the editor, or ask any agent in any mode to generate App code for you directly from a workspace.
